@@ -1,4 +1,4 @@
 - localize the msgs returned by extractSkyConditions() and
   extractCloudInformation()
-- thoroughly test the new inner workings (asynchronous fetch &
-  parse)
+  Related: pull the messages out of the library file into an extra
+  module or text/libfile
