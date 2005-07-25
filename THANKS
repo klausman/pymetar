@@ -12,3 +12,6 @@ Thanks go to...
 ...Adrian Holovaty for pointing out trouble with types.TupleType and 
    contributing a solution
 ...Stefan Majer for pointing up an excpetion bug
+...Uli Martens for providing a Debian package
+...Klaus Alexander Seistrup for providing valuable feedback regarding
+   bugs and packaging.
