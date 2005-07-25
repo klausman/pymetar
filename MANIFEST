@@ -6,4 +6,5 @@ TODO
 librarydoc.txt
 pymetar.py
 setup.py
-bin/pymet2.py
+bin/example.py
+bin/weather.py
