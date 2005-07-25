@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-15 -*-
-# Copyright (C) 2002  Tobias Klausmann
+# Copyright (C) 2002-2004  Tobias Klausmann
 # Modifications Copyright (C) 2002 by Jerome Alet
 # 
 # Code contributed by:
@@ -20,7 +20,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+# Foundation, Inc., 59 Temple Place, Suite 330 Boston, MA
 #
 # By reading this code you agree not to ridicule the author =)
 
@@ -38,7 +38,7 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.10"
+__version__ = "0.11"
 
 __doc__ = """Pymetar v%s (c) 2002-2004 Tobias Klausmann
 
@@ -923,13 +923,21 @@ class ReportFetcher:
        proxies."""
 
     def __init__(self, MetarStationCode=None, baseurl="http://weather.noaa.gov/pub/data/observations/metar/decoded/"):
-        """Set stationid attribute"""
+        """Set stationid attribute and base URL to fetch report from"""
         self.stationid=MetarStationCode
         self.baseurl=baseurl
 
-    def FetchReport(self, StationCode=None):
-        """Fetch a report for a given station ID from the baseurl given
-        upon creation of the ReportFetcher instance."""
+    def FetchReport(self, StationCode=None, proxy=None):
+        """
+        Fetch a report for a given station ID from the baseurl given
+        upon creation of the ReportFetcher instance.
+        If proxy is not None, a proxy URL of the form
+        protocol://user:password@host.name.tld:port/
+        is expected, for example:
+        http://squid.somenet.com:3128/
+        If no proxy is specified, the environment variable http_proxy 
+        is inspected. If it isn't set, a direct connection is tried.
+        """
         if self.stationid is None and StationCode is None:
             raise EmptyIDException, \
                 "No ID given on init and FetchReport()."
@@ -938,8 +946,16 @@ class ReportFetcher:
 
         self.stationid=self.stationid.upper()
         self.reporturl="%s%s.TXT" % (self.baseurl, self.stationid)
-        urllib2.install_opener(
-            urllib2.build_opener(urllib2.ProxyHandler, urllib2.HTTPHandler))
+        
+        if proxy:
+            p_dict={'http': proxy}
+            p_handler=urllib2.ProxyHandler(p_dict)
+            opener = urllib2.build_opener(p_handler, urllib2.HTTPHandler)
+            urllib2.install_opener(opener)
+        else:
+            urllib2.install_opener(
+                urllib2.build_opener(urllib2.ProxyHandler, urllib2.HTTPHandler))
+
         try:
             fn=urllib2.urlopen(self.reporturl)
         except urllib2.HTTPError, why:
