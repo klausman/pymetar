@@ -38,7 +38,7 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.8"
+__version__ = "0.9"
 
 __doc__ = """Pymetar v%s (c) 2002-2004 Tobias Klausman
 
@@ -71,6 +71,10 @@ class EmptyReportException(Exception):
         self.args=args
 
 class EmptyIDException(Exception):
+    def __init__(self, args=None):
+        self.args=args
+
+class NetworkException(Exception):
     def __init__(self, args=None):
         self.args=args
 
@@ -476,13 +480,15 @@ class WeatherReport:
         """
         Return visibility in km.
         """
-        return self.vis
+        if self.vis is not None:
+            return self.vis / 1.609344
 
     def getVisibilityMiles(self):
         """
         Return visibility in miles.
         """
-        return self.vis / 1.609344
+        if self.vis is not None:
+            return self.vis / 1.609344
 
     def getHumidity(self):
         """
