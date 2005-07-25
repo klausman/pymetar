@@ -18,7 +18,7 @@ from distutils.core import setup
 import pymetar
 
 setup(name = "pymetar", version = pymetar.__version__,
-      licence = "GNU GPL",
+      license = "GNU GPL",
       description = pymetar.__doc__,
       author = "Tobias Klausmann",
       author_email = "klausman-usenet@tuts.net",
