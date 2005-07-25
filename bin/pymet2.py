@@ -1,26 +1,30 @@
 #!/usr/bin/python -tt
+# -*- coding: iso-8859-15 -*-
+
 import pymetar
+
 rf=pymetar.ReportFetcher("NZCM")
 rep=rf.FetchReport()
 rp=pymetar.ReportParser()
 pr=rp.ParseReport(rep)
 
-print "------- Full report -------"
+print "--------- Full report ---------"
 print pr.fullreport
-print "----- End full report -----"
+print "------- End full report -------"
 
-print "------ Parsed Values ------"
+print "-------- Parsed Values --------"
 for k in pr.__dict__.keys():
  if k != "fullreport":
   print "%s: %s"%(k,pr.__dict__[k])
-print "---- End Parsed Values ----"
+print "------ End Parsed Values ------"
 
-print "--- Report getFunctions ---"
+print "----- Report getFunctions -----"
 print "getTemperatureCelsius():",pr.getTemperatureCelsius()
 print "getTemperatureFahrenheit():",pr.getTemperatureFahrenheit()
 print "getDewPointCelsius():",pr.getDewPointCelsius()
 print "getDewPointFahrenheit():",pr.getDewPointFahrenheit()
 print "getWindSpeed():",pr.getWindSpeed()
+print "getWindSpeedMilesPerHour():",pr.getWindSpeedMilesPerHour()
 print "getWindDirection():",pr.getWindDirection()
 print "getWindCompass():",pr.getWindCompass()
 print "getVisibilityKilometers():",pr.getVisibilityKilometers()
@@ -45,5 +49,5 @@ print "getReportURL():",pr.getReportURL()
 print "getTime():",pr.getTime()
 print "getISOTime():",pr.getISOTime()
 print "getPixmap():",pr.getPixmap()
-print "- End Report getFunctions -"
+print "--- End Report getFunctions ---"
 
