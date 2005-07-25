@@ -1,6 +1,11 @@
+# -*- coding: iso-8859-15 -*-
 # Copyright (C) 2002  Tobias Klausmann
 # Modified by Jerome Alet
-# Code contributed by Jerome Alet and Davide Di Blasi
+# 
+# Code contributed by:
+# Jerome Alet 
+# Davide Di Blasi
+# Adrian Holovaty
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,9 +37,9 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.6b"
+__version__ = "0.7"
 
-__doc__ = """Pymetar v%s (c) 2002, 2003 Tobias Klausman
+__doc__ = """Pymetar v%s (c) 2002-2004 Tobias Klausman
 
 Pymetar is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
@@ -374,10 +379,12 @@ class WeatherReport:
         self.givenstationid=None
         self.fullreport=None
         self.temp=None
+        self.tempf=None
         self.windspeed=None
         self.winddir=None
         self.vis=None
         self.dewp=None
+        self.dewpf=None
         self.humid=None
         self.press=None
         self.code=None
@@ -424,7 +431,7 @@ class WeatherReport:
         """
         Return the temperature in degrees Fahrenheit.
         """
-        return (self.temp * (9.0/5.0)) + 32.0
+        return self.tempf
 
     def getDewPointCelsius(self):
         """
@@ -436,13 +443,20 @@ class WeatherReport:
         """
         Return dewpoint in degrees Fahrenheit.
         """
-        return (self.dewp * (9.0/5.0)) + 32.0
+        return self.dewpf
 
     def getWindSpeed(self):
         """
         Return the wind speed in meters per second.
         """
         return self.windspeed
+
+    def getWindSpeedMilesPerHour(self):
+        """
+        Return the wind speed in miles per hour.
+        """
+        if self.windspeed is not None:
+            return self.windspeed * 2.237
 
     def getWindDirection(self):
         """
@@ -681,7 +695,7 @@ class ReportParser:
             if phenomenon is not None :
                 (name, pixmap, phenomenon) = phenomenon
                 pheninfo = phenomenon.get(squal, name)
-                if type(pheninfo) != types.TupleType :
+                if type(pheninfo) != type(()) :
                     return (pheninfo, pixmap)
                 else :
                     # contains pixmap info
@@ -802,8 +816,11 @@ class ReportParser:
             # temperature
 
             elif (header == "Temperature"):
-                t,i=data.split(" ",1)
-                self.Report.temp=(float(t)-32)*(5.0/9.0)
+                f,i,c,i=data.split(None,3)
+                self.Report.tempf=float(f)
+                # The string we have split is "(NN C)", hence the slice
+                self.Report.temp=float(c[1:])
+
 
             # wind dir and speed
             
@@ -840,8 +857,10 @@ class ReportParser:
             # dew point
             
             elif (header == "Dew Point"):
-                dp,i=data.split(" ",1)
-                self.Report.dewp=(float(dp)-32)*(5.0/9.0)
+                f,i,c,i=data.split(None,3)
+                self.Report.dewpf=float(f)
+                # The string we have split is "(NN C)", hence the slice
+                self.Report.dewp=float(c[1:])
 
             # humidity
              
