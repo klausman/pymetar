@@ -1,7 +1,7 @@
 Python Library Documentation: module pymetar
 
 NAME
-    pymetar - Pymetar v0.6b (c) 2002, 2003 Tobias Klausman
+    pymetar - Pymetar v0.7 (c) 2002-2004 Tobias Klausman
 
 FILE
     /home/klausman/src/pymetar-0.6/pymetar.py
@@ -276,6 +276,9 @@ CLASSES
      |  getWindSpeed(self)
      |      Return the wind speed in meters per second.
      |  
+     |  getWindSpeedMilesPerHour(self)
+     |      Return the wind speed in miles per hour.
+     |  
      |  metar_to_iso8601(self, metardate)
      |      Convert a metar date to an ISO8601 date.
      |  
@@ -293,10 +296,10 @@ DATA
     __author__ = 'klausman-pymetar@schwarzvogel.de'
     __file__ = './pymetar.py'
     __name__ = 'pymetar'
-    __version__ = '0.6b'
+    __version__ = '0.7'
 
 VERSION
-    0.6b
+    0.7
 
 AUTHOR
     klausman-pymetar@schwarzvogel.de
