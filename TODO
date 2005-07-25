@@ -1,0 +1,4 @@
+- localize the msgs returned by extractSkyConditions() and
+  extractCloudInformation()
+- thoroughly test the new inner workings (asynchronous fetch &
+  parse)
