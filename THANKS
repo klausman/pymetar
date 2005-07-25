@@ -11,3 +11,4 @@ Thanks go to...
 ...Tim Middleton who provided code for getWindchill() and getCustom()
 ...Adrian Holovaty for pointing out trouble with types.TupleType and 
    contributing a solution
+...Stefan Majer for pointing up an excpetion bug
