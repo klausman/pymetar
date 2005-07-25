@@ -1,9 +1,13 @@
-Thanks goes to...
+Thanks go to...
 
 ...Klaus Alexander Seistrup for pointing me to some docs regarding cycles
+   and pointing out a flaw in the way Fahrenheit and Celsius temepratures
+   are handled
 ...Jerome Alet who adapted the ob-parsing code of Spiros Papadimitriou's
    gnome-weather-applet to Python and helped a lot with debugging and 
    developing this library.
 ...David Leblanc for confirming a parsing bug
 ...Davide Di Blasi for suggesting (and implementing) proxy capability
 ...Tim Middleton who provided code for getWindchill() and getCustom()
+...Adrian Holovaty for pointing out trouble with types.TupleType and 
+   contributing a solution
