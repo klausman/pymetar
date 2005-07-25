@@ -1,7 +1,7 @@
 Help on module pymetar:
 
 NAME
-    pymetar - Pymetar v0.10 (c) 2002-2004 Tobias Klausmann
+    pymetar - Pymetar v0.11 (c) 2002-2004 Tobias Klausmann
 
 FILE
     pymetar.py
@@ -79,12 +79,18 @@ CLASSES
      |  
      |  Methods defined here:
      |  
-     |  FetchReport(self, StationCode=None)
+     |  FetchReport(self, StationCode=None, proxy=None)
      |      Fetch a report for a given station ID from the baseurl given
      |      upon creation of the ReportFetcher instance.
+     |      If proxy is not None, a proxy URL of the form
+     |      protocol://user:password@host.name.tld:port/
+     |      is expected, for example:
+     |      http://squid.somenet.com:3128/
+     |      If no proxy is specified, the environment variable http_proxy 
+     |      is inspected. If it isn't set, a direct connection is tried.
      |  
      |  __init__(self, MetarStationCode=None, baseurl='http://weather.noaa.gov/pub/data/observations/metar/decoded/')
-     |      Set stationid attribute
+     |      Set stationid attribute and base URL to fetch report from
     
     class ReportParser
      |  Parse raw METAR data from a WeatherReport object into actual 
@@ -268,10 +274,10 @@ DATA
     CLOUD_RE_STR = '^(CLR|SKC|BKN|SCT|FEW|OVC)([0-9]{3})?$'
     COND_RE_STR = r'^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|...S|U...
     __author__ = 'klausman-pymetar@schwarzvogel.de'
-    __version__ = '0.10'
+    __version__ = '0.11'
 
 VERSION
-    0.10
+    0.11
 
 AUTHOR
     klausman-pymetar@schwarzvogel.de
