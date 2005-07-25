@@ -1,8 +1,8 @@
 Thanks go to...
 
-...Klaus Alexander Seistrup for pointing me to some docs regarding cycles
-   and pointing out a flaw in the way Fahrenheit and Celsius temepratures
-   are handled
+...Klaus Alexander Seistrup for pointing me to some docs regarding cycles,
+   pointing out a flaw in the way Fahrenheit and Celsius temperatures
+   are handled and for providing valuable feedback regarding packaging.
 ...Jerome Alet who adapted the ob-parsing code of Spiros Papadimitriou's
    gnome-weather-applet to Python and helped a lot with debugging and 
    developing this library.
@@ -13,5 +13,3 @@ Thanks go to...
    contributing a solution
 ...Stefan Majer for pointing up an excpetion bug
 ...Uli Martens for providing a Debian package
-...Klaus Alexander Seistrup for providing valuable feedback regarding
-   bugs and packaging.
