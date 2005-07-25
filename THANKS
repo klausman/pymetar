@@ -6,3 +6,4 @@ Thanks goes to...
    developing this library.
 ...David Leblanc for confirming a parsing bug
 ...Davide Di Blasi for suggesting (and implementing) proxy capability
+...Tim Middleton who provided code for getWindchill() and getCustom()
