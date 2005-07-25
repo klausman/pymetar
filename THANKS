@@ -5,3 +5,4 @@ Thanks goes to...
    gnome-weather-applet to Python and helped a lot with debugging and 
    developing this library.
 ...David Leblanc for confirming a parsing bug
+...Davide Di Blasi for suggesting (and implementing) proxy capability
