@@ -22,6 +22,6 @@ setup(name = "pymetar", version = pymetar.__version__,
       description = pymetar.__doc__,
       author = "Tobias Klausmann",
       author_email = "klausman-pymetar@schwarzvogel.de",
-      url = "http://unattached.i-no.de/english/linux.php",
+      url = "http://www.schwarzvogel.de/software-pymetar.shtml",
       packages= [ "" ],
-      scripts = [ "bin/pymet2" ])
+      scripts = [ "bin/pymet2.py" ])
