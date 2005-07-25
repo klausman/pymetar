@@ -2,4 +2,6 @@ Thanks goes to...
 
 ...Klaus Alexander Seistrup for pointing me to some docs regarding cycles
 ...Jerome Alet who adapted the ob-parsing code of Spiros Papadimitriou's
-   gnome-weather-applet to Python
+   gnome-weather-applet to Python and helped a lot with debugging and 
+   developing this library.
+...David Leblanc for confirming a parsing bug
