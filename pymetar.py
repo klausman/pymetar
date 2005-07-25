@@ -38,7 +38,7 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.11"
+__version__ = "0.12"
 
 __doc__ = """Pymetar v%s (c) 2002-2004 Tobias Klausmann
 
@@ -481,7 +481,7 @@ class WeatherReport:
         Return visibility in km.
         """
         if self.vis is not None:
-            return self.vis / 1.609344
+            return self.vis
 
     def getVisibilityMiles(self):
         """
