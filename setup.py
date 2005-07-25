@@ -21,7 +21,7 @@ setup(name = "pymetar", version = pymetar.__version__,
       licence = "GNU GPL",
       description = pymetar.__doc__,
       author = "Tobias Klausmann",
-      author_email = "klausman@tuts.net",
+      author_email = "klausman-usenet@tuts.net",
       url = "http://unattached.i-no.de/english/linux.php",
       packages= [ "" ],
-      scripts = [ "bin/pymetar" ])
+      scripts = [ "bin/pymet" ])
