@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+# Copyright (C) 2002  Tobias Klausmann
+# Modified by Jerome Alet
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+import sys
+import pymetar
+
+def main(args) :
+    for arg in map(lambda x : x.strip(), args) :
+	try :
+	    weather = pymetar.MetarReport(arg)
+	except IOError, msg :
+	    sys.stderr.write("Problem accessing the weather server : %s\n" % msg)
+	else :
+	    if weather.valid :
+		print "Station name : %s" % weather.getStationName()
+		print "Station position : Lat: %s, Long: %s, Alt: %s m)" % weather.getStationPosition()
+		print "Station latitude : %s" % weather.getStationLatitude()
+		print "Station longitude : %s" % weather.getStationLongitude()
+		print "Station height above sea : %s m" % weather.getStationHeight()
+		print "Metar's Raw answer : %s" % weather.getRawMetarCode()
+		print "Time of last update : %s" % weather.getTime()
+		print "Cycle : %s" % weather.getCycle()
+		print "Wind direction : %s" % weather.getWindDirection()
+		print "Wind compass : from %s" % weather.getWindCompass()
+		print "Wind speed : %s ms" % weather.getWindSpeed()
+		print "Temperature : %.1f°C (%.1f°F)" % (weather.getTemperatureCelsius(), weather.getTemperatureFahrenheit())
+		print "Dew point : %.1f°C (%.1f°F)" % (weather.getDewPointCelsius(), weather.getDewPointFahrenheit())
+		print "Humidity : %.0f%%" % weather.getHumidity()
+		print "Visibility : %.1f Km" % weather.getVisibilityKilometers()
+		print "Pressure : %.0f hPa" % weather.getPressure()
+		print "Weather : %s" % weather.getWeather()
+		print "Sky conditions : %s" % weather.getSkyConditions()
+		print "Suggested pixmap : %s" % weather.getPixmap()
+		print
+
+if __name__ == "__main__" :
+    if len(sys.argv) > 1 :
+	main(sys.argv[1:])
+    else :
+	sys.stderr.write("usage : pymetar MetarStationCode\n")
+	sys.exit(-1)
