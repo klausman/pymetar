@@ -6,6 +6,7 @@
 # Jerome Alet 
 # Davide Di Blasi
 # Adrian Holovaty
+# Tim Middleton
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,7 +38,7 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.7"
+__version__ = "0.8"
 
 __doc__ = """Pymetar v%s (c) 2002-2004 Tobias Klausman
 
@@ -768,8 +769,6 @@ class ReportParser:
 
         lines=self.Report.fullreport.split("\n")
 
-        print "%s lines" % len(lines)
-
         for line in lines:
             try:
                 header, data=line.split(":",1)
@@ -778,8 +777,6 @@ class ReportParser:
 
             header=header.strip()
             data=data.strip()
-
-            print header,'%%', data
 
             # The station id inside the report
             if header.find("("+self.Report.givenstationid+")")!=-1:
@@ -825,20 +822,16 @@ class ReportParser:
             # wind dir and speed
             
             elif (header == "Wind"):
-                print header
                 if (data.find("Calm")!=-1):
-                    print "calm"
                     self.Report.windspeed=0.0
                     self.Report.winddir=None
                     self.Report.windcomp=None
                 elif (data.find("Variable")!=-1):
-                    print "var"
                     v,a,speed,r=data.split(" ",3)
                     self.Report.windspeed=(float(speed)*0.44704)
                     self.Report.winddir=None
                     self.Report.windcomp=None
                 else:
-                    print "elab"
                     f,t,comp,deg,r,d,speed,r=data.split(" ",7)
                     self.Report.winddir=int(deg[1:])
                     self.Report.windcomp=comp.strip()
