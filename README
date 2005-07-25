@@ -1,0 +1,130 @@
+Python Library Documentation: module pymetar
+
+NAME
+    pymetar
+
+FILE
+    pymetar.py
+
+DESCRIPTION
+    # Copyright (C) 2002  Tobias Klausmann
+    #
+    # This program is free software; you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation; either version 2 of the License, or
+    # (at your option) any later version.
+    #
+    # This program is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with this program; if not, write to the Free Software
+    # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+    #
+    # By reading this code you agree not to ridicule the author =)
+
+CLASSES
+    Report
+    
+    class Report
+     |  This class provides a means to download and parse 
+     |  the decoded METAR reports from http://weather.noaa.gov
+     |  
+     |  In order to find the report relevant for you, find
+     |  the closest station at 
+     |  http://www.nws.noaa.gov/oso/siteloc.shtml and feed
+     |  its 4-letter station code to fetch()
+     |  
+     |  All methods return metric values, no matter what the
+     |  station provides. The conversion factors were taken 
+     |  from the excellent "units" program.
+     |  
+     |  __init__(self)
+     |  
+     |  fetch(self, station, baseurl='http://weather.noaa.gov/pub/data/observations/metar/decoded/')
+     |      Retrieve the decoded METAR report from the given
+     |      base URL and parse it.
+     |      Fill the data properties in the class instance with
+     |      the values found in the report, converting them to 
+     |      metric values where necessary.
+     |  
+     |  getcode(self)
+     |      Return the encoded weather report.
+     |  
+     |  getcycle(self)
+     |      Return cycle value.
+     |      The cycle value is not the frequency or delay
+     |      between observations but the "time slot" in
+     |      which the observation was made. There are 24 
+     |      cycle slots every day which usually last from
+     |      N:45 to N+1:45. The cycle from 23:45 to 0:45
+     |      is cycle 0.
+     |  
+     |  getdewpoint(self)
+     |      Return dewpoint in degrees Celsius.
+     |  
+     |  getfullname(self)
+     |      Return full station name
+     |  
+     |  gethumid(self)
+     |      Return relative humidity in percent.
+     |  
+     |  getlocpos(self)
+     |      Return latitude, longitude and height above sea level of station
+     |      as a tuple. Some stations don't deliver height, for those,
+     |      -1 is returned as height.
+     |      The lat/longs are expressed as follows:
+     |      xx-yyd
+     |      where xx is degrees, yy minutes and d the direction.
+     |      Thus 51-14N means 51 degrees, 14 minutes north.
+     |      d may take the values N, S for latitues and W, E for
+     |      longitudes.
+     |      Height is always given as meters above sea level,
+     |      including a trailing M.
+     |      Schipohl Int. Airport Amsterdam has, for example:
+     |      ('52-18N', '004-46E', '-2M')
+     |      Moenchengladbach (where I live):
+     |      ('51-14N', '063-03E', -1)
+     |  
+     |  getpress(self)
+     |      Return pressure in hPa.
+     |  
+     |  getreport(self)
+     |      Return the complete weather report.
+     |  
+     |  getskycond(self)
+     |      Return sky conditions
+     |  
+     |  gettemp(self)
+     |      Return the temperature in degrees Celsius.
+     |  
+     |  gettime(self)
+     |      Return the time when the observation was made.
+     |      Note that this is *not* the time when the report
+     |      was fetched by us
+     |      Format:  YYYY.MM.DD HHMM UTC
+     |      Example: 2002.04.01 1020 UTC
+     |  
+     |  getvis(self)
+     |      Return visibility in km. Return values of 12
+     |      correspond to "greater than 11 km".
+     |  
+     |  getweather(self)
+     |      Return short weather conditions
+     |  
+     |  getwindcomp(self)
+     |      Return wind direction as compass direction
+     |      (e.g. NE or SSE)
+     |  
+     |  getwinddir(self)
+     |      Return wind direction in degrees.
+     |  
+     |  getwindspeed(self)
+     |      Return the wind speed in meters per second.
+
+DATA
+    __file__ = './pymetar.pyc'
+    __name__ = 'pymetar'
+
