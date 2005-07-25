@@ -1,7 +1,7 @@
 Metadata-Version: 1.0
 Name: pymetar
-Version: 0.4
-Summary: Pymetar v0.4 (c) 2002 Tobias Klausman
+Version: 0.5
+Summary: Pymetar v0.5 (c) 2002 Tobias Klausman
 
 Pymetar is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the included
