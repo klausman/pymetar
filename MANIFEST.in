@@ -1,1 +1,1 @@
-include COPYING README THANKS MANIFEST.in bin/pymetar
+include librarydoc.txt COPYING README THANKS MANIFEST.in bin/pymet
