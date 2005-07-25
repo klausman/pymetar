@@ -24,4 +24,8 @@ setup(name = "pymetar", version = pymetar.__version__,
       author_email = "klausman-pymetar@schwarzvogel.de",
       url = "http://www.schwarzvogel.de/software-pymetar.shtml",
       packages= [ "" ],
-      scripts = [ "bin/pymet2.py" ])
+      py_modules=["pymetar"],
+      scripts = [ "bin/weather.py" ], 
+      data_files = [("share/doc/pymetar-%s/"%pymetar.__version__,
+       ['README', 'COPYING', 'THANKS', 'TODO', 'bin/example.py', 'librarydoc.txt'])]
+      )
