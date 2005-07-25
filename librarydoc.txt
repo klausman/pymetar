@@ -1,10 +1,10 @@
-Python Library Documentation: module pymetar
+Help on module pymetar:
 
 NAME
-    pymetar - Pymetar v0.8 (c) 2002-2004 Tobias Klausman
+    pymetar - Pymetar v0.9 (c) 2002-2004 Tobias Klausman
 
 FILE
-    /home/klausman/src/pymetar-0.6/pymetar.py
+    pymetar.py
 
 DESCRIPTION
     Pymetar is a python module and command line tool designed to fetch Metar
@@ -31,6 +31,7 @@ CLASSES
     exceptions.Exception
         EmptyIDException
         EmptyReportException
+        NetworkException
     ReportFetcher
     ReportParser
     WeatherReport
@@ -39,13 +40,6 @@ CLASSES
      |  Methods defined here:
      |  
      |  __init__(self, args=None)
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data and non-method functions defined here:
-     |  
-     |  __doc__ = None
-     |  
-     |  __module__ = 'pymetar'
      |  
      |  ----------------------------------------------------------------------
      |  Methods inherited from exceptions.Exception:
@@ -60,11 +54,16 @@ CLASSES
      |  __init__(self, args=None)
      |  
      |  ----------------------------------------------------------------------
-     |  Data and non-method functions defined here:
+     |  Methods inherited from exceptions.Exception:
      |  
-     |  __doc__ = None
+     |  __getitem__(...)
      |  
-     |  __module__ = 'pymetar'
+     |  __str__(...)
+    
+    class NetworkException(exceptions.Exception)
+     |  Methods defined here:
+     |  
+     |  __init__(self, args=None)
      |  
      |  ----------------------------------------------------------------------
      |  Methods inherited from exceptions.Exception:
@@ -86,13 +85,6 @@ CLASSES
      |  
      |  __init__(self, MetarStationCode=None, baseurl='http://weather.noaa.gov/pub/data/observations/metar/decoded/')
      |      Set stationid attribute
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data and non-method functions defined here:
-     |  
-     |  __doc__ = 'Fetches a report from a given METAR id, optional... using e...
-     |  
-     |  __module__ = 'pymetar'
     
     class ReportParser
      |  Parse raw METAR data from a WeatherReport object into actual 
@@ -132,13 +124,6 @@ CLASSES
      |  
      |  strreverse(self, str)
      |      Reverse a string
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data and non-method functions defined here:
-     |  
-     |  __doc__ = 'Parse raw METAR data from a WeatherReport object... and ret...
-     |  
-     |  __module__ = 'pymetar'
     
     class WeatherReport
      |  Incorporates both the unparsed textual representation of the
@@ -146,9 +131,6 @@ CLASSES
      |  in by ReportParser.
      |  
      |  Methods defined here:
-     |  
-     |  _ClearAllFields(self)
-     |      Clear all fields values.
      |  
      |  __init__(self, MetarStationCode=None)
      |      Clear all fields and fill in wanted station id.
@@ -167,7 +149,7 @@ CLASSES
      |      Return dewpoint in degrees Fahrenheit.
      |  
      |  getFullReport(self)
-     |       Return the complete weather report.
+     |      Return the complete weather report.
      |  
      |  getHumidity(self)
      |      Return relative humidity in percent.
@@ -281,26 +263,17 @@ CLASSES
      |  
      |  metar_to_iso8601(self, metardate)
      |      Convert a metar date to an ISO8601 date.
-     |  
-     |  ----------------------------------------------------------------------
-     |  Data and non-method functions defined here:
-     |  
-     |  __doc__ = 'Incorporates both the unparsed textual represent... soon as...
-     |  
-     |  __module__ = 'pymetar'
 
 DATA
     CLOUD_RE_STR = '^(CLR|SKC|BKN|SCT|FEW|OVC)([0-9]{3})?$'
     COND_RE_STR = r'^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|...S|U...
-    _WeatherConditions = {'+FC': ('Tornado', 'storm', {'': 'Moderate torna...
     __author__ = 'klausman-pymetar@schwarzvogel.de'
-    __file__ = './pymetar.py'
-    __name__ = 'pymetar'
-    __version__ = '0.8'
+    __version__ = '0.9'
 
 VERSION
-    0.8
+    0.9
 
 AUTHOR
     klausman-pymetar@schwarzvogel.de
+
 
