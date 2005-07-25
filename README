@@ -32,7 +32,7 @@ the base URL of the reports and fetch the file.
 
 This is what this library does. All you have to do is find the
 station you're interested in at
-http://www.nws.noaa.gov/oso/siteloc.shtml and feed the 4-letter
+http://www.nws.noaa.gov/tg/siteloc.shtml and feed the 4-letter
 station code to the MetarReport class.
 
 On the user end, the library provides a large number of methods to
