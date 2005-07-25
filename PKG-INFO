@@ -1,7 +1,7 @@
 Metadata-Version: 1.0
 Name: pymetar
-Version: 0.6b
-Summary: Pymetar v0.6b (c) 2002, 2003 Tobias Klausman
+Version: 0.7
+Summary: Pymetar v0.7 (c) 2002-2004 Tobias Klausman
 
 Pymetar is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
@@ -22,7 +22,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 Please e-mail bugs to: klausman-pymetar@schwarzvogel.de
-Home-page: http://unattached.i-no.de/english/linux.php
+Home-page: http://www.schwarzvogel.de/software-pymetar.shtml
 Author: Tobias Klausmann
 Author-email: klausman-pymetar@schwarzvogel.de
 License: GNU GPL
