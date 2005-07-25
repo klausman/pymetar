@@ -1,9 +1,19 @@
 #!/usr/bin/python -tt
 # -*- coding: iso-8859-15 -*-
 
-import pymetar
+__version__="2.1"
 
-rf=pymetar.ReportFetcher("NZCM")
+import pymetar
+import sys
+
+print "pymet v%s using pymetar lib v%s"%(__version__,pymetar.__version__)
+
+if len(sys.argv)<2:
+    station="NZCM"
+else:
+    station=sys.argv[1]
+
+rf=pymetar.ReportFetcher(station)
 rep=rf.FetchReport()
 rp=pymetar.ReportParser()
 pr=rp.ParseReport(rep)
