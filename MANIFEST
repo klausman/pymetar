@@ -1,0 +1,9 @@
+COPYING
+MANIFEST
+README
+THANKS
+TODO
+librarydoc.txt
+pymetar.py
+setup.py
+bin/pymet2.py
