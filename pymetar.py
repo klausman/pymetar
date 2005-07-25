@@ -1,6 +1,6 @@
 # -*- coding: iso-8859-15 -*-
 # Copyright (C) 2002  Tobias Klausmann
-# Modified by Jerome Alet
+# Modifications Copyright (C) 2002 by Jerome Alet
 # 
 # Code contributed by:
 # Jerome Alet 
@@ -38,9 +38,9 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.9"
+__version__ = "0.10"
 
-__doc__ = """Pymetar v%s (c) 2002-2004 Tobias Klausman
+__doc__ = """Pymetar v%s (c) 2002-2004 Tobias Klausmann
 
 Pymetar is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
