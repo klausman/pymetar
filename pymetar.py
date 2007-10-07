@@ -810,7 +810,7 @@ class ReportParser:
                 self.Report.longf=self.parseLatLong(long)
                 self.Report.altitude=ht
 
-            # The line containing date and timr of the report
+            # The line containing date and time of the report
 
             elif (data.find("UTC"))!=-1:
                 local,rt=data.split("/")
