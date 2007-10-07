@@ -811,8 +811,10 @@ class ReportParser:
                 self.Report.altitude=ht
 
             # The line containing date and time of the report
-
-            elif (data.find("UTC"))!=-1:
+            # We have to make sure that the station ID is *not*
+            # in this line to avoid trying to parse the ob: line
+            elif ((data.find("UTC"))!=-1 and \
+                    (data.find(self.Report.givenstationid))==-1):
                 local,rt=data.split("/")
                 self.Report.rtime=rt.strip()
 
