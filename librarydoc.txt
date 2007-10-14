@@ -1,7 +1,7 @@
 Help on module pymetar:
 
 NAME
-    pymetar - Pymetar v0.12 (c) 2002-2004 Tobias Klausmann
+    pymetar - Pymetar v0.13 (c) 2002-2007 Tobias Klausmann
 
 FILE
     pymetar.py
@@ -28,49 +28,9 @@ DESCRIPTION
     Please e-mail bugs to: klausman-pymetar@schwarzvogel.de
 
 CLASSES
-    exceptions.Exception
-        EmptyIDException
-        EmptyReportException
-        NetworkException
     ReportFetcher
     ReportParser
     WeatherReport
-    
-    class EmptyIDException(exceptions.Exception)
-     |  Methods defined here:
-     |  
-     |  __init__(self, args=None)
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from exceptions.Exception:
-     |  
-     |  __getitem__(...)
-     |  
-     |  __str__(...)
-    
-    class EmptyReportException(exceptions.Exception)
-     |  Methods defined here:
-     |  
-     |  __init__(self, args=None)
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from exceptions.Exception:
-     |  
-     |  __getitem__(...)
-     |  
-     |  __str__(...)
-    
-    class NetworkException(exceptions.Exception)
-     |  Methods defined here:
-     |  
-     |  __init__(self, args=None)
-     |  
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from exceptions.Exception:
-     |  
-     |  __getitem__(...)
-     |  
-     |  __str__(...)
     
     class ReportFetcher
      |  Fetches a report from a given METAR id, optionally taking into
@@ -264,6 +224,10 @@ CLASSES
      |  getWindSpeed(self)
      |      Return the wind speed in meters per second.
      |  
+     |  getWindSpeedBeaufort(self)
+     |      Return the wind speed in the Beaufort scale
+     |      cf. http://en.wikipedia.org/wiki/Beaufort_scale
+     |  
      |  getWindSpeedMilesPerHour(self)
      |      Return the wind speed in miles per hour.
      |  
@@ -277,7 +241,7 @@ DATA
     __version__ = '0.12'
 
 VERSION
-    0.12
+    0.13
 
 AUTHOR
     klausman-pymetar@schwarzvogel.de
