@@ -1,12 +1,5 @@
 # -*- coding: iso-8859-15 -*-
 # Copyright (C) 2002-2007  Tobias Klausmann
-# Modifications Copyright (C) 2002 by Jerome Alet
-# 
-# Code contributed by:
-# Jerome Alet 
-# Davide Di Blasi
-# Adrian Holovaty
-# Tim Middleton
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,8 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330 Boston, MA
 #
-# By reading this code you agree not to ridicule the author =)
-
 # When reading this code you'll noctice that not everything is parsed
 # from the raw METAR info as supplied with the report. Before you start
 # flaming the authors, please read the FHM-1 spec and guess how hairy a
@@ -39,6 +30,7 @@ import urllib2
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
 __version__ = "0.13"
+__revision__ = "$Rev$"[]
 
 __doc__ = """Pymetar v%s (c) 2002-2007 Tobias Klausmann
 
@@ -696,7 +688,8 @@ class ReportParser:
         """
         wcond = self.match_WeatherPart(COND_RE_STR)
         if wcond is not None :
-            if (len(wcond)>3) and (wcond.startswith('+') or wcond.startswith('-')) :
+            if (len(wcond)>3) and (wcond.startswith('+') \
+                or wcond.startswith('-')) :
                 wcond = wcond[1:]
             if wcond.startswith('+') or wcond.startswith('-') :
                 pphen = 1
@@ -932,7 +925,8 @@ class ReportFetcher:
        account a different baseurl and using environment var-specified 
        proxies."""
 
-    def __init__(self, MetarStationCode=None, baseurl="http://weather.noaa.gov/pub/data/observations/metar/decoded/"):
+    def __init__(self, MetarStationCode=None, baseurl=\
+        "http://weather.noaa.gov/pub/data/observations/metar/decoded/"):
         """Set stationid attribute and base URL to fetch report from"""
         self.stationid=MetarStationCode
         self.baseurl=baseurl
