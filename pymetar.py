@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-15 -*-
-# Copyright (C) 2002-2004  Tobias Klausmann
+# Copyright (C) 2002-2007  Tobias Klausmann
 # Modifications Copyright (C) 2002 by Jerome Alet
 # 
 # Code contributed by:
@@ -38,9 +38,9 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.12"
+__version__ = "0.13"
 
-__doc__ = """Pymetar v%s (c) 2002-2004 Tobias Klausmann
+__doc__ = """Pymetar v%s (c) 2002-2007 Tobias Klausmann
 
 Pymetar is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
@@ -462,6 +462,14 @@ class WeatherReport:
         """
         if self.windspeed is not None:
             return self.windspeed * 2.237
+
+    def getWindSpeedBeaufort(self):
+        """
+        Return the wind speed in the Beaufort scale
+        cf. http://en.wikipedia.org/wiki/Beaufort_scale
+        """
+        if self.windspeed is not None:
+            return round(math.pow(self.windspeed/0.8359648, 2/3.0))
 
     def getWindDirection(self):
         """
