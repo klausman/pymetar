@@ -38,7 +38,8 @@ print "Temperature: %s C / %s F" %\
     (pr.getTemperatureCelsius(), pr.getTemperatureFahrenheit())
 print "Rel. Humidity: %s%%" % (pr.getHumidity())
 if pr.getWindSpeed() is not None:
-    print "Wind speed: %0.2f m/s" % (pr.getWindSpeed())
+    print "Wind speed: %0.2f m/s (%s Bft)" % \
+        (pr.getWindSpeed(), pr.getWindSpeedBeaufort())
 else:
     print "Wind speed: None"
     
