@@ -1,10 +1,9 @@
 COPYING
-MANIFEST
+MANIFEST.in
 README
 THANKS
-TODO
 librarydoc.txt
 pymetar.py
 setup.py
-bin/example.py
+bin/pymet
 bin/weather.py
