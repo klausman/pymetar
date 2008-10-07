@@ -15,3 +15,4 @@ Thanks go to...
 ...Uli Martens for providing a Debian package
 ...Laurent Rahuel for catching a bug in getVisibilityKilometers()
 ...Nicolas Évrard for finding a cloud cover bug
+...Gregor Hermann for finding another sky condition bug
