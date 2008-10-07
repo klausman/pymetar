@@ -14,3 +14,4 @@ Thanks go to...
 ...Stefan Majer for pointing up an exception bug
 ...Uli Martens for providing a Debian package
 ...Laurent Rahuel for catching a bug in getVisibilityKilometers()
+...Nicolas Évrard for finding a cloud cover bug
