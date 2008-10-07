@@ -1,7 +1,7 @@
 Help on module pymetar:
 
 NAME
-    pymetar - Pymetar v0.13 (c) 2002-2007 Tobias Klausmann
+    pymetar - Pymetar v0.14 (c) 2002-2008 Tobias Klausmann
 
 FILE
     pymetar.py
@@ -28,9 +28,22 @@ DESCRIPTION
     Please e-mail bugs to: klausman-pymetar@schwarzvogel.de
 
 CLASSES
+    exceptions.Exception(exceptions.BaseException)
+        EmptyIDException
+        EmptyReportException
+        NetworkException
     ReportFetcher
     ReportParser
     WeatherReport
+    
+    class EmptyIDException(exceptions.Exception)
+     |  This gets thrown when the ReportFetcher is called with an empty ID
+    
+    class EmptyReportException(exceptions.Exception)
+     |  This gets thrown when the ReportParser gets fed an empty report
+    
+    class NetworkException(exceptions.Exception)
+     |  This gets thrown when a network error occurs
     
     class ReportFetcher
      |  Fetches a report from a given METAR id, optionally taking into
@@ -48,6 +61,13 @@ CLASSES
      |      http://squid.somenet.com:3128/
      |      If no proxy is specified, the environment variable http_proxy 
      |      is inspected. If it isn't set, a direct connection is tried.
+     |  
+     |  GetReport(self)
+     |      Get a previously fetched report again
+     |  
+     |  MakeReport(self, StationID, RawReport)
+     |      Take a string (RawReport) and a station code and turn it
+     |      into an object suitable for ReportParser
      |  
      |  __init__(self, MetarStationCode=None, baseurl='http://weather.noaa.gov/pub/data/observations/metar/decoded/')
      |      Set stationid attribute and base URL to fetch report from
@@ -82,14 +102,6 @@ CLASSES
      |      Return the first matching string or None.  
      |      WARNING: Some Metar reports may contain several matching 
      |      strings, only the first one is taken into account!
-     |  
-     |  parseLatLong(self, latlong)
-     |      Parse Lat or Long in METAR notation into float values. N and E 
-     |      are +, S and W are -. Expects one positional string and returns 
-     |      one float value.
-     |  
-     |  strreverse(self, str)
-     |      Reverse a string
     
     class WeatherReport
      |  Incorporates both the unparsed textual representation of the
@@ -191,7 +203,7 @@ CLASSES
      |  
      |  getStationPositionFloat(self)
      |      Return latitude and longitude as float values in a 
-     |      tuple (lat,long,alt).
+     |      tuple (lat, long, alt).
      |  
      |  getTemperatureCelsius(self)
      |      Return the temperature in degrees Celsius.
@@ -230,18 +242,25 @@ CLASSES
      |  
      |  getWindSpeedMilesPerHour(self)
      |      Return the wind speed in miles per hour.
-     |  
-     |  metar_to_iso8601(self, metardate)
-     |      Convert a metar date to an ISO8601 date.
+
+FUNCTIONS
+    metar_to_iso8601(metardate)
+        Convert a metar date to an ISO8601 date.
+    
+    parseLatLong(latlong)
+        Parse Lat or Long in METAR notation into float values. N and E 
+        are +, S and W are -. Expects one positional string and returns 
+        one float value.
 
 DATA
-    CLOUD_RE_STR = '^(CLR|SKC|BKN|SCT|FEW|OVC)([0-9]{3})?$'
-    COND_RE_STR = r'^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|...S|U...
+    CLOUD_RE_STR = '^(CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?$'
+    COND_RE_STR = '^(-|\\\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?\\\n(DZ|RA|S......
     __author__ = 'klausman-pymetar@schwarzvogel.de'
-    __version__ = '0.12'
+    __revision__ = '80'
+    __version__ = '0.14'
 
 VERSION
-    0.13
+    0.14
 
 AUTHOR
     klausman-pymetar@schwarzvogel.de

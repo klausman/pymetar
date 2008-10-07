@@ -23,10 +23,10 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.13"
+__version__ = "0.14"
 __revision__ = "$Rev$"[6:-2]
 
-__doc__ = """Pymetar v%s (c) 2002-2007 Tobias Klausmann
+__doc__ = """Pymetar v%s (c) 2002-2008 Tobias Klausmann
 
 Pymetar is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
@@ -49,7 +49,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 Please e-mail bugs to: %s""" % (__version__, __author__)
 
 
-CLOUD_RE_STR = r"^(CLR|SKC|BKN|SCT|FEW|OVC)([0-9]{3})?$"
+CLOUD_RE_STR = r"^(CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?$"
 COND_RE_STR  = r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?\
 (DZ|RA|SN|SG|IC|PE|GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\\+?FC)$"
 
@@ -696,7 +696,7 @@ class ReportParser:
         wcloud = self.match_WeatherPart(CLOUD_RE_STR)
         if wcloud is not None :
             stype = wcloud[:3]
-            if (stype == "CLR") or (stype == "SKC") :
+            if stype in ("CLR", "SKC", "CAV", "NSC"):
                 return ("Clear sky", "sun")
             elif stype == "BKN" :
                 return ("Broken clouds", "suncloud")

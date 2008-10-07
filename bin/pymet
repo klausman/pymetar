@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf8 -*-
 # Copyright (C) 2002  Tobias Klausmann
 # Modified by Jerome Alet
 #
@@ -45,9 +46,9 @@ def main(args):
                 print "Wind compass: from %s" % weather.getWindCompass()
                 print "Wind speed: %s ms" % weather.getWindSpeed()
                 if weather.getTemperatureCelsius() is not None:
-                    print "Temperature: %.1f캜 (%.1f캟)" % (weather.getTemperatureCelsius(), weather.getTemperatureFahrenheit())
+                    print "Temperature: %.1f째C (%.1f째F)" % (weather.getTemperatureCelsius(), weather.getTemperatureFahrenheit())
                 if weather.getDewPointCelsius() is not None:
-                    print "Dew point: %.1f캜 (%.1f캟)" % (weather.getDewPointCelsius(), weather.getDewPointFahrenheit())
+                    print "Dew point: %.1f째C (%.1f째F)" % (weather.getDewPointCelsius(), weather.getDewPointFahrenheit())
                 if weather.getHumidity() is not None: 
                     print "Humidity: %.0f%%" % weather.getHumidity()
                 if weather.getVisibilityKilometers() is not None:
