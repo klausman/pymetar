@@ -1,10 +1,10 @@
 Help on module pymetar:
 
 NAME
-    pymetar - Pymetar v0.14 (c) 2002-2008 Tobias Klausmann
+    pymetar - Pymetar v0.15 (c) 2002-2009 Tobias Klausmann
 
 FILE
-    pymetar.py
+    /home/klausman/pm/pymetar.py
 
 DESCRIPTION
     Pymetar is a python module and command line tool designed to fetch Metar
@@ -240,6 +240,9 @@ CLASSES
      |      Return the wind speed in the Beaufort scale
      |      cf. http://en.wikipedia.org/wiki/Beaufort_scale
      |  
+     |  getWindSpeedKnots(self)
+     |      Return the wind speed in knots
+     |  
      |  getWindSpeedMilesPerHour(self)
      |      Return the wind speed in miles per hour.
 
@@ -253,14 +256,14 @@ FUNCTIONS
         one float value.
 
 DATA
-    CLOUD_RE_STR = '^(CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?$'
+    CLOUD_RE_STR = '^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?$'
     COND_RE_STR = '^(-|\\\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?\\\n(DZ|RA|S......
     __author__ = 'klausman-pymetar@schwarzvogel.de'
-    __revision__ = '80'
-    __version__ = '0.14'
+    __revision__ = '84'
+    __version__ = '0.15'
 
 VERSION
-    0.14
+    0.15
 
 AUTHOR
     klausman-pymetar@schwarzvogel.de

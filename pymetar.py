@@ -1,6 +1,6 @@
 # -*- coding: iso-8859-15 -*-
 """This is just here to make pylint happy """
-# Copyright (C) 2002-2007  Tobias Klausmann
+# Copyright (C) 2002-2009  Tobias Klausmann
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.14"
+__version__ = "0.15"
 __revision__ = "$Rev$"[6:-2]
 
-__doc__ = """Pymetar v%s (c) 2002-2008 Tobias Klausmann
+__doc__ = """Pymetar v%s (c) 2002-2009 Tobias Klausmann
 
 Pymetar is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
@@ -489,7 +489,7 @@ class WeatherReport:
         Return the wind speed in miles per hour.
         """
         if self.windspeed is not None:
-            return self.windspeed * 2.237
+            return self.windspeedmph
 
     def getWindSpeedBeaufort(self):
         """
@@ -498,6 +498,13 @@ class WeatherReport:
         """
         if self.windspeed is not None:
             return round(math.pow(self.windspeed/0.8359648, 2/3.0))
+
+    def getWindSpeedKnots(self):
+        """
+        Return the wind speed in knots
+        """
+        if self.windspeed is not None:
+            return self.windspeedknots
 
     def getWindDirection(self):
         """
@@ -827,23 +834,30 @@ class ReportParser:
             elif (header == "Wind"):
                 if (data.find("Calm") != -1):
                     self.Report.windspeed = 0.0
+                    self.Report.windspeedkt = 0.0
+                    self.Report.windspeedmph = 0.0
                     self.Report.winddir = None
                     self.Report.windcomp = None
                 elif (data.find("Variable") != -1):
                     speed = data.split(" ", 3)[2]
                     self.Report.windspeed = (float(speed)*0.44704)
+                    self.Report.windspeedkt = int(data.split(" ", 5)[4][1:])
+                    self.Report.windspeedmph = int(speed)
                     self.Report.winddir = None
                     self.Report.windcomp = None
                 else:
-                    fields = data.split(" ", 7)[0:7]
+                    fields = data.split(" ", 9)[0:9]
                     f = fields[0]
                     comp = fields[2]
                     deg = fields[3]
                     speed = fields[6]
+                    speedkt = fields[8][1:]
                     del fields
                     self.Report.winddir = int(deg[1:])
                     self.Report.windcomp = comp.strip()
                     self.Report.windspeed = (float(speed)*0.44704)
+                    self.Report.windspeedkt = (int(speedkt))
+                    self.Report.windspeedmph = int(speed)
 
             # visibility
 
