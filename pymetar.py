@@ -1,6 +1,6 @@
-# -*- coding: iso-8859-15 -*-
+# -*- coding: utf8 -*-
 """This is just here to make pylint happy """
-# Copyright (C) 2002-2009  Tobias Klausmann
+# Copyright (C) 2002-2010  Tobias Klausmann
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.15"
+__version__ = "0.16"
 __revision__ = "$Rev$"[6:-2]
 
-__doc__ = """Pymetar v%s (c) 2002-2009 Tobias Klausmann
+__doc__ = """Pymetar v%s (c) 2002-2010 Tobias Klausmann
 
 Pymetar is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
@@ -49,9 +49,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 Please e-mail bugs to: %s""" % (__version__, __author__)
 
 
-CLOUD_RE_STR = r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?$"
-COND_RE_STR  = r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?\
-(DZ|RA|SN|SG|IC|PE|GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\\+?FC)$"
+CLOUD_RE_STR = r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})(CB)?$"
+COND_RE_STR  = r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\\+?FC)$"
 
 class EmptyReportException(Exception):
     """This gets thrown when the ReportParser gets fed an empty report"""
@@ -444,6 +443,10 @@ class WeatherReport:
         self.reporturl = None
         self.latf = None
         self.longf = None
+        self.cloudinfo = None
+        self.conditions = None
+        self.w_chill = None
+        self.w_chillf = None
 
     def __init__(self, MetarStationCode = None):
         """Clear all fields and fill in wanted station id."""
@@ -686,6 +689,33 @@ class WeatherReport:
         """
         return self.pixmap
 
+    def getCloudinfo(self):
+        """
+        Return a tuple consisting of the parsed cloud information and a
+        suggest pixmap name
+        """
+        return self.cloudinfo
+
+    def getConditions(self):
+        """
+        Return a tuple consisting of the parsed sky conditions and a
+        suggested pixmap name
+        """
+        return self.conditions
+
+    def getWindchill(self):
+        """
+        Return wind chill in degrees Celsius
+        """
+        return self.w_chill
+
+    def getWindchillF(self):
+        """
+        Return wind chill in degrees Fahrenheit
+        """
+        return self.w_chillf
+
+
 
 class ReportParser:
     """Parse raw METAR data from a WeatherReport object into actual 
@@ -827,7 +857,14 @@ class ReportParser:
                 self.Report.tempf = float(f)
                 # The string we have split is "(NN C)", hence the slice
                 self.Report.temp = float(c[1:])
+            
+            # wind chill
 
+            elif (header == "Windchill"):
+                f, c = data.split(None, 3)[0:3:2]
+                self.Report.w_chillf = float(f)
+                # The string we have split is "(NN C)", hence the slice
+                self.Report.w_chill = float(c[1:])
 
             # wind dir and speed
             
@@ -921,6 +958,10 @@ class ReportParser:
             (conditions, condpixmap) = conditions
         else :
             (conditions, condpixmap) = (None, None)
+
+        # Some people might want to always use sky or cloud info specifially
+        self.Report.cloudinfo = (cloudinfo, cloudpixmap)
+        self.Report.conditions = (conditions, condpixmap)
 
         # fill the weather information
         self.Report.weather = self.Report.weather or conditions or cloudinfo
