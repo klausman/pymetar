@@ -27,5 +27,5 @@ setup(name = "pymetar", version = pymetar.__version__,
       py_modules=["pymetar"],
       scripts = [ "bin/weather.py" ], 
       data_files = [("share/doc/pymetar-%s/"%pymetar.__version__,
-       ['README', 'COPYING', 'THANKS', 'TODO', 'bin/pymet2.py', 'librarydoc.txt', 'pymetar.1'])]
+       ['README', 'COPYING', 'THANKS', 'TODO', 'bin/pymetar', 'librarydoc.txt', 'pymetar.1'])]
       )
