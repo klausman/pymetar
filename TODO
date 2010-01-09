@@ -2,3 +2,4 @@
   extractCloudInformation()
   Related: pull the messages out of the library file into an extra
   module or text/libfile
+- Make pymetar Python 3.x compatible (ideally while remaining 2.6+ compatible)
