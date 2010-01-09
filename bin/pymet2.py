@@ -59,5 +59,10 @@ print "getReportURL():",pr.getReportURL()
 print "getTime():",pr.getTime()
 print "getISOTime():",pr.getISOTime()
 print "getPixmap():",pr.getPixmap()
+print "getWindchill():",pr.getWindchill()
+print "getWindchillF():",pr.getWindchillF()
+print "getCloudinfo():",pr.getCloudinfo()
+print "getConditions():",pr.getConditions()
+
 print "--- End Report getFunctions ---"
 

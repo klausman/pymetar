@@ -1,56 +1,59 @@
-#!/usr/bin/env python
-# Copyright (C) 2002  Tobias Klausmann
-# Modified by Jerome Alet
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#!/usr/bin/python -tt
+# -*- coding: iso-8859-15 -*-
 
-import sys
+__version__="1.0"
+
 import pymetar
+import sys
 
-def main(args) :
-    for arg in map(lambda x : x.strip(), args) :
-	try :
-	    weather = pymetar.MetarReport(arg)
-	except IOError, msg :
-	    sys.stderr.write("Problem accessing the weather server : %s\n" % msg)
-	else :
-	    if weather.valid :
-		print "Station name : %s" % weather.getStationName()
-		print "Station position : Lat: %s, Long: %s, Alt: %s m)" % weather.getStationPosition()
-		print "Station latitude : %s" % weather.getStationLatitude()
-		print "Station longitude : %s" % weather.getStationLongitude()
-		print "Station height above sea : %s m" % weather.getStationHeight()
-		print "Metar's Raw answer : %s" % weather.getRawMetarCode()
-		print "Time of last update : %s" % weather.getTime()
-		print "Cycle : %s" % weather.getCycle()
-		print "Wind direction : %s" % weather.getWindDirection()
-		print "Wind compass : from %s" % weather.getWindCompass()
-		print "Wind speed : %s ms" % weather.getWindSpeed()
-		print "Temperature : %.1f°C (%.1f°F)" % (weather.getTemperatureCelsius(), weather.getTemperatureFahrenheit())
-		print "Dew point : %.1f°C (%.1f°F)" % (weather.getDewPointCelsius(), weather.getDewPointFahrenheit())
-		print "Humidity : %.0f%%" % weather.getHumidity()
-		print "Visibility : %.1f Km" % weather.getVisibilityKilometers()
-		print "Pressure : %.0f hPa" % weather.getPressure()
-		print "Weather : %s" % weather.getWeather()
-		print "Sky conditions : %s" % weather.getSkyConditions()
-		print "Suggested pixmap : %s" % weather.getPixmap()
-		print
+#print "pymet v%s using pymetar lib v%s"%(__version__,pymetar.__version__)
 
-if __name__ == "__main__" :
-    if len(sys.argv) > 1 :
-	main(sys.argv[1:])
-    else :
-	sys.stderr.write("usage : pymetar MetarStationCode\n")
-	sys.exit(-1)
+if len(sys.argv)<2 or sys.argv[1]=="--help":
+    sys.stderr.write("Usage: %s <station id>\n"% sys.argv[0])
+    sys.stderr.write("Station IDs can be found at: http://www.nws.noaa.gov/tg/siteloc.shtml\n")
+    sys.exit(1)
+elif (sys.argv[1] == "--version"):
+    print "%s v%s using pymetar lib v%s"%(sys.argv[0], __version__,pymetar.__version__)
+    sys.exit(0)
+else:
+    station=sys.argv[1]
+
+try:
+    rf=pymetar.ReportFetcher(station)
+    rep=rf.FetchReport()
+except Exception, e:
+    sys.stderr.write("Something went wrong when fetching the report.\n")
+    sys.stderr.write("These usually are transient problems if the station ")
+    sys.stderr.write("ID is valid. \nThe error encountered was:\n")
+    sys.stderr.write(str(e)+"\n")
+    sys.exit(1)
+
+rp=pymetar.ReportParser()
+pr=rp.ParseReport(rep)
+
+print "Weather report for %s (%s) as of %s" %\
+    (pr.getStationName(), station, pr.getISOTime())
+print "Values of \"None\" indicate that the value is missing from the report."
+print "Temperature: %s C / %s F" %\
+    (pr.getTemperatureCelsius(), pr.getTemperatureFahrenheit())
+print "Wind chill: %s C / %s F" % (pr.getWindchill(), pr.getWindchillF())
+
+print "Rel. Humidity: %s%%" % (pr.getHumidity())
+if pr.getWindSpeed() is not None:
+    print "Wind speed: %0.2f m/s (%i Bft)" % \
+        (pr.getWindSpeed(), pr.getWindSpeedBeaufort())
+else:
+    print "Wind speed: None"
+    
+print "Wind direction: %s deg (%s)" %\
+    (pr.getWindDirection(), pr.getWindCompass())
+if pr.getPressure() is not None:
+    print "Pressure: %s hPa" % (int(pr.getPressure()))
+else:
+    print "Pressure: None"
+
+print "Dew Point: %s C / %s F" %\
+    (pr.getDewPointCelsius(), pr.getDewPointFahrenheit())
+print "Weather:",pr.getWeather()
+print "Sky Conditions:",pr.getSkyConditions()
+    

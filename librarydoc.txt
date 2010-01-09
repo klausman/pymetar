@@ -1,10 +1,10 @@
 Help on module pymetar:
 
 NAME
-    pymetar - Pymetar v0.15 (c) 2002-2009 Tobias Klausmann
+    pymetar - Pymetar v0.16 (c) 2002-2010 Tobias Klausmann
 
 FILE
-    /home/klausman/pm/pymetar.py
+    pymetar.py
 
 DESCRIPTION
     Pymetar is a python module and command line tool designed to fetch Metar
@@ -112,6 +112,14 @@ CLASSES
      |  
      |  __init__(self, MetarStationCode=None)
      |      Clear all fields and fill in wanted station id.
+     |  
+     |  getCloudinfo(self)
+     |      Return a tuple consisting of the parsed cloud information and a
+     |      suggest pixmap name
+     |  
+     |  getConditions(self)
+     |      Return a tuple consisting of the parsed sky conditions and a
+     |      suggested pixmap name
      |  
      |  getCycle(self)
      |      Return cycle value.
@@ -245,6 +253,12 @@ CLASSES
      |  
      |  getWindSpeedMilesPerHour(self)
      |      Return the wind speed in miles per hour.
+     |  
+     |  getWindchill(self)
+     |      Return wind chill in degrees Celsius
+     |  
+     |  getWindchillF(self)
+     |      Return wind chill in degrees Fahrenheit
 
 FUNCTIONS
     metar_to_iso8601(metardate)
@@ -256,14 +270,13 @@ FUNCTIONS
         one float value.
 
 DATA
-    CLOUD_RE_STR = '^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?$'
-    COND_RE_STR = '^(-|\\\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?\\\n(DZ|RA|S......
+    CLOUD_RE_STR = '^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})(CB)?$'
+    COND_RE_STR = r'^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|...S|U...
     __author__ = 'klausman-pymetar@schwarzvogel.de'
-    __revision__ = '84'
-    __version__ = '0.15'
+    __version__ = '0.16'
 
 VERSION
-    0.15
+    0.16
 
 AUTHOR
     klausman-pymetar@schwarzvogel.de

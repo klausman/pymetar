@@ -53,6 +53,11 @@ if __name__ == "__main__":
         a=pr.getTime()
         a=pr.getISOTime()
         a=pr.getPixmap()
+        a=pr.getCloudinfo()
+        a=pr.getConditions()
+        a=pr.getWindchill()
+        a=pr.getWindchillF()
+
 
         count += 1
 
