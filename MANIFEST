@@ -3,7 +3,8 @@ MANIFEST.in
 README
 THANKS
 librarydoc.txt
+pymetar.1
 pymetar.py
 setup.py
-bin/pymet
+bin/pymetar
 bin/weather.py
