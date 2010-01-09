@@ -12,7 +12,10 @@ Thanks go to...
 ...Adrian Holovaty for pointing out trouble with types.TupleType and 
    contributing a solution
 ...Stefan Majer for pointing up an exception bug
-...Uli Martens for providing a Debian package
+...Uli Martens for providing a Debian package and a man page
 ...Laurent Rahuel for catching a bug in getVisibilityKilometers()
 ...Nicolas Évrard for finding a cloud cover bug
 ...Gregor Hermann for finding another sky condition bug
+...Alexander Voronin for finding two long-standing bugs in the the cloud and
+   conditions parsing regexen and suggesting a better method for storing and 
+   reporting sky conditions and cloud information.
