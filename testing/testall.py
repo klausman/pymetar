@@ -9,8 +9,8 @@ if __name__ == "__main__":
     rf=pymetar.ReportFetcher()
     for line in fd:
         station = line.strip()
-        sys.stderr.write("%s " % (station))
-        sys.stderr.flush()
+        sys.stdout.write("%s " % (station))
+        sys.stdout.flush()
 
         fd2 = open("reports/%s.TXT" % station)
         report = fd2.read()
@@ -61,6 +61,6 @@ if __name__ == "__main__":
 
         count += 1
 
-    print "\n%s station reports check out ok" % (count)
+    sys.stderr.write("%s station reports check out ok\n" % (count))
 
 
