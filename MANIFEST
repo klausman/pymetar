@@ -7,4 +7,3 @@ pymetar.1
 pymetar.py
 setup.py
 bin/pymetar
-bin/weather.py
