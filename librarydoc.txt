@@ -88,7 +88,7 @@ CLASSES
      |  
      |  extractCloudInformation(self)
      |      Extract cloud information. Return None or a tuple (sky type as a
-     |      string of text and suggested pixmap name)
+     |      string of text, cloud type (if any)  and suggested pixmap name)
      |  
      |  extractSkyConditions(self)
      |      Extract sky condition information from the encoded report. Return 
@@ -116,6 +116,9 @@ CLASSES
      |  getCloudinfo(self)
      |      Return a tuple consisting of the parsed cloud information and a
      |      suggest pixmap name
+     |  
+     |  getCloudtype(self)
+     |      Return cloud type information
      |  
      |  getConditions(self)
      |      Return a tuple consisting of the parsed sky conditions and a
