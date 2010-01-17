@@ -435,6 +435,7 @@ class WeatherReport:
         self.temp = None
         self.tempf = None
         self.windspeed = None
+        self.windspeedmph = None
         self.winddir = None
         self.vis = None
         self.dewp = None
@@ -722,12 +723,29 @@ class WeatherReport:
         """
         Return wind chill in degrees Celsius
         """
+        # I've had two choices here: simply convert the Fahrenheit windchill (see below)
+        # or calculate it seperately if needed. I chose the latter for accuracy reasons
+        if self.w_chill ==  None:
+            if  self.temp and self.temp < 10 and \
+                self.windspeed and (self.windspeed*3.6) > 4.8:
+                self.w_chill = 13.12 + 0.6215*self.temp - 11.37*(self.windspeed*3.6)**0.16\
+                                 + 0.3965*self.temp*(self.windspeed*3.6)**0.16
         return self.w_chill
 
     def getWindchillF(self):
         """
         Return wind chill in degrees Fahrenheit
         """
+        # This code is derived from NOAA's test on the topic, put into code (and donated)
+        # by Alexander Voronin
+        if self.w_chillf == None:
+            if  self.tempf and self.tempf <= 50 and \
+                self.windspeedmph and self.windspeedmph >= 3:
+                self.w_chillf = 35.74 + 0.6215*self.tempf - 35.75*self.windspeedmph**0.16 + \
+                                0.4275*self.tempf*self.windspeedmph**0.16
+            else:
+                self.w_chillf = self.tempf
+
         return self.w_chillf
 
     def getCloudtype(self):
