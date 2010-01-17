@@ -55,5 +55,6 @@ else:
 print "Dew Point: %s C / %s F" %\
     (pr.getDewPointCelsius(), pr.getDewPointFahrenheit())
 print "Weather:",pr.getWeather()
+print "Cloudtype:",pr.getCloudtype()
 print "Sky Conditions:",pr.getSkyConditions()
     
