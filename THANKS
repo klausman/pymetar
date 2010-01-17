@@ -18,4 +18,5 @@ Thanks go to...
 ...Gregor Hermann for finding another sky condition bug
 ...Alexander Voronin for finding two long-standing bugs in the the cloud and
    conditions parsing regexen and suggesting a better method for storing and 
-   reporting sky conditions and cloud information.
+   reporting sky conditions and cloud information. He also contributed code
+   to calculate wind chill if it's not given in the report.
