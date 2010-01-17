@@ -49,7 +49,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 Please e-mail bugs to: %s""" % (__version__, __author__)
 
 
-CLOUD_RE_STR = r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})(CB)?$"
+CLOUD_RE_STR = r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})(TCU|CU|CB|SC|CBMAM|ACC|SCSL|CCSL|ACSL)?$"
+CTYPE_RE_STR = r"^(TCU|CU|CB|SC|CBMAM|ACC|SCSL|CCSL|ACSL)?$"
 COND_RE_STR  = r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\\+?FC)$"
 
 class EmptyReportException(Exception):
@@ -356,6 +357,19 @@ _WeatherConditions = {
                              }),
                     }
 
+CLOUDTYPES = { 
+               "ACC": "altocumulus castellanus",
+               "ACSL": "standing lenticular altocumulus",
+               "CB": "cumulonimbus",
+               "CBMAM": "cumulonimbus mammatus",
+               "CCSL": "standing lenticular cirrocumulus",
+               "CU": "cumulus",
+               "SCSL": "standing lenticular stratocumulus",
+               "SC": "stratocumulus",
+               "TCU": "towering cumulus"
+}
+
+
 def metar_to_iso8601(metardate) :
     """Convert a metar date to an ISO8601 date."""
     if metardate is not None:
@@ -447,6 +461,7 @@ class WeatherReport:
         self.conditions = None
         self.w_chill = None
         self.w_chillf = None
+        self.cloudtype = None
 
     def __init__(self, MetarStationCode = None):
         """Clear all fields and fill in wanted station id."""
@@ -715,6 +730,12 @@ class WeatherReport:
         """
         return self.w_chillf
 
+    def getCloudtype(self):
+        """
+        Return cloud type information
+        """
+        return self.cloudtype
+
 
 
 class ReportParser:
@@ -728,23 +749,34 @@ class ReportParser:
     def extractCloudInformation(self) :
         """
         Extract cloud information. Return None or a tuple (sky type as a
-        string of text and suggested pixmap name)
+        string of text, cloud type (if any)  and suggested pixmap name)
         """   
-        wcloud = self.match_WeatherPart(CLOUD_RE_STR)
-        if wcloud is not None :
-            stype = wcloud[:3]
-            if stype in ("CLR", "SKC", "CAV", "NSC"):
-                return ("Clear sky", "sun")
-            elif stype == "BKN" :
-                return ("Broken clouds", "suncloud")
-            elif stype == "SCT" :
-                return ("Scattered clouds", "suncloud")
-            elif stype == "FEW" :
-                return ("Few clouds", "suncloud")
-            elif stype == "OVC" :
-                return ("Overcast", "cloud")
-        else:
-            return None # Not strictly necessary
+        matches = self.match_WeatherPart(CLOUD_RE_STR)
+        skytype = None
+        ctype = None
+        pixmap = None
+        for wcloud in matches:
+            if wcloud is not None:
+                stype = wcloud[:3]
+                if stype in ("CLR", "SKC", "CAV", "NSC"):
+                    skytype="Clear sky"
+                    pixmap="sun"
+                elif stype == "BKN" :
+                    skytype="Broken clouds"
+                    pixmap="suncloud"
+                elif stype == "SCT" :
+                    skytype="Scattered clouds"
+                    pixmap="suncloud"
+                elif stype == "FEW" :
+                    skytype="Few clouds"
+                    pixmap="suncloud"
+                elif stype == "OVC" :
+                    skytype="Overcast"
+                    pixmap="cloud"
+                if ctype == None:
+                    ctype = CLOUDTYPES.get(wcloud[6:], None)
+
+        return (skytype, ctype, pixmap)
 
     def extractSkyConditions(self) :
         """
@@ -753,8 +785,8 @@ class ReportParser:
         string and a suggested pixmap name for an icon representing said 
         sky condition.
         """
-        wcond = self.match_WeatherPart(COND_RE_STR)
-        if wcond is not None :
+        matches = self.match_WeatherPart(CTYPE_RE_STR)
+        for wcond in matches:
             if (len(wcond)>3) and (wcond.startswith('+') \
                 or wcond.startswith('-')) :
                 wcond = wcond[1:]
@@ -784,12 +816,14 @@ class ReportParser:
         WARNING: Some Metar reports may contain several matching 
         strings, only the first one is taken into account!
         """
+        matches=[]
         if self.Report.code is not None :
             rg = re.compile(regexp)
             for wpart in self.Report.getRawMetarCode().split() :
                 match = rg.match(wpart)
                 if match:
-                    return match.string[match.start(0) : match.end(0)]
+                    matches.append(match.string[match.start(0) : match.end(0)])
+        return matches
 
     def ParseReport(self, MetarReport = None):
         """Take report with raw info only and return it with in 
@@ -833,6 +867,12 @@ class ReportParser:
                 except ValueError:
                     (lat, lng) = p.split()[1:3]
                     ht = None
+                # A few jokers out there think O==0
+                if "O" in lat:
+                    lat=lat.replace("O", "0")
+                if "O" in lng:
+                    lng=lng.replace("O", "0")
+
                 self.Report.stat_city = rcity.strip()[::-1]
                 self.Report.stat_country = rcoun.strip()[::-1]
                 self.Report.fulln = loc
@@ -845,7 +885,7 @@ class ReportParser:
             # The line containing date and time of the report
             # We have to make sure that the station ID is *not*
             # in this line to avoid trying to parse the ob: line
-            elif ((data.find("UTC")) != -1 and \
+            elif ((data.find(" UTC")) != -1 and \
                     (data.find(self.Report.givenstationid)) == -1):
                 rt = data.split("/")[1]
                 self.Report.rtime = rt.strip()
@@ -949,10 +989,8 @@ class ReportParser:
 
         # cloud info
         cloudinfo = self.extractCloudInformation()
-        if cloudinfo is not None :
-            (cloudinfo, cloudpixmap) = cloudinfo
-        else :
-            (cloudinfo, cloudpixmap) = (None, None)
+        (cloudinfo, cloudtype, cloudpixmap) = cloudinfo
+
         conditions = self.extractSkyConditions()
         if conditions is not None :
             (conditions, condpixmap) = conditions
@@ -969,6 +1007,10 @@ class ReportParser:
         # Pixmap guessed from general conditions has priority
         # over pixmap guessed from clouds
         self.Report.pixmap = condpixmap or cloudpixmap
+
+        # Cloud type (Cumulonimbus etc.)
+        if self.Report.cloudtype == None:
+            self.Report.cloudtype = cloudtype
 
         # report is complete
         self.Report.valid = 1
