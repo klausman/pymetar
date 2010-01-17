@@ -2,19 +2,30 @@
 
 import pymetar
 import sys
+import os
 
 if __name__ == "__main__":
-    fd = open("stations")
+    if len(sys.argv) > 1:
+        repdir=sys.argv[1]
+    else:
+        repdir=("reports")
+
+    if len(sys.argv) > 2:
+        reports = sys.argv[2:]
+    else:
+        reports = os.listdir(repdir)
+
     count=0
     rf=pymetar.ReportFetcher()
-    for line in fd:
-        station = line.strip()
+
+    for reportfile in reports:
+        station = reportfile[:-4]
         sys.stdout.write("%s " % (station))
         sys.stdout.flush()
 
-        fd2 = open("reports/%s.TXT" % station)
-        report = fd2.read()
-        fd2.close()
+        fd = open("%s/%s" % (repdir, reportfile))
+        report = fd.read()
+        fd.close()
 
         repo = rf.MakeReport(station, report)
         
@@ -57,7 +68,6 @@ if __name__ == "__main__":
         a=pr.getConditions()
         a=pr.getWindchill()
         a=pr.getWindchillF()
-
 
         count += 1
 
