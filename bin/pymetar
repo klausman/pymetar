@@ -1,12 +1,10 @@
 #!/usr/bin/python -tt
 # -*- coding: iso-8859-15 -*-
 
-__version__="1.0"
+__version__="1.1"
 
 import pymetar
 import sys
-
-#print "pymet v%s using pymetar lib v%s"%(__version__,pymetar.__version__)
 
 if len(sys.argv)<2 or sys.argv[1]=="--help":
     sys.stderr.write("Usage: %s <station id>\n"% sys.argv[0])
