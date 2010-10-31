@@ -1,10 +1,8 @@
 pymetar - a module to fetch and parse METAR reports
 ---------------------------------------------------
 
-NOTE:
-During the early versions of this library, the API has changed 
-considerably. In case of problems always double-check the lib
-documentation of this package (librarydoc.txt).
+NOTE: If you're looking for information regarding Python 3 and
+pymetar, see the end of this document.
 
 The National Oceanic and Atmospheric Administration (NOAA,
 www.noaa.gov) provides easy access to the weather reports
@@ -69,4 +67,27 @@ programmer and can provide a patch. If you do so, please, by all
 means use Spaces for indentation, four per level, that makes
 merging the patch a lot easier.
 
-Enjoy the code and, as Wau Holland put it: "Viel Spass am Gerät"
+Python 3
+--------
+
+Pymetar does currently not support Python 3 (Python 2.4 and 2.6
+should be fine. Versions <2.4 are not officially supported but may
+work by chance).
+
+I'm currently in the process of plotting out the future of
+Pymetar, which naturally includes thinking about Py3. The design
+of the whole library is now close to eight years old. At this
+point, there is little that I can do in the ways of changing the
+API gradually, so I'm thinking about releasing a totally
+incompatible new library which will only share the basic purpose of
+Pymetar. I don't think that the current code can be refactored
+easily and I have meant to try different approaches to the same
+problem (pylex, dispatcher code, state machines and sundry other
+stuff). *If* I go that route, it will be Py3-only, since that is
+the future. Also, I will create a better test suite/scaffolding.
+
+If you want to join me in building and designing the "new
+Pymetar", feel free to join me on the mailing list.
+
+Oh, and we need a new name or some other distinctive tag for the
+new code. And no, it will not be pymetar-ng.
