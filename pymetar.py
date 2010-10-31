@@ -357,7 +357,7 @@ _WeatherConditions = {
                              }),
                     }
 
-CLOUDTYPES = { 
+CLOUDTYPES = {
                "ACC": "altocumulus castellanus",
                "ACSL": "standing lenticular altocumulus",
                "CB": "cumulonimbus",
@@ -381,14 +381,14 @@ def metar_to_iso8601(metardate) :
 
 def parseLatLong(latlong):
     """
-    Parse Lat or Long in METAR notation into float values. N and E 
-    are +, S and W are -. Expects one positional string and returns 
+    Parse Lat or Long in METAR notation into float values. N and E
+    are +, S and W are -. Expects one positional string and returns
     one float value.
     """
     # I know, I could invert this if and put
     # the rest of the function into its block,
     # but I find it to be more readable this way
-    if latlong is None: 
+    if latlong is None:
         return None
 
     s = latlong.upper().strip()
@@ -422,7 +422,7 @@ def parseLatLong(latlong):
 
 class WeatherReport:
     """Incorporates both the unparsed textual representation of the
-    weather report and the parsed values as soon as they are filled 
+    weather report and the parsed values as soon as they are filled
     in by ReportParser."""
 
     def _ClearAllFields(self):
@@ -603,9 +603,9 @@ class WeatherReport:
     def getCycle(self):
         """
         Return cycle value.
-        The cycle value is not the frequency or delay between 
-        observations but the "time slot" in which the observation was made. 
-        There are 24 cycle slots every day which usually last from N:45 to 
+        The cycle value is not the frequency or delay between
+        observations but the "time slot" in which the observation was made.
+        There are 24 cycle slots every day which usually last from N:45 to
         N+1:45. The cycle from 23:45 to 0:45 is cycle 0.
         """
         return self.cycle
@@ -613,19 +613,19 @@ class WeatherReport:
     def getStationPosition(self):
         """
         Return latitude, longitude and altitude above sea level of station
-        as a tuple. Some stations don't deliver altitude, for those, None 
+        as a tuple. Some stations don't deliver altitude, for those, None
         is returned as altitude.  The lat/longs are expressed as follows:
         xx-yyd
         where xx is degrees, yy minutes and d the direction.
-        Thus 51-14N means 51 degrees, 14 minutes north.  d may take the 
-        values N, S for latitues and W, E for longitudes. Latitude and 
-        Longitude may include seconds.  Altitude is always given as meters 
+        Thus 51-14N means 51 degrees, 14 minutes north.  d may take the
+        values N, S for latitues and W, E for longitudes. Latitude and
+        Longitude may include seconds.  Altitude is always given as meters
         above sea level, including a trailing M.
         Schipohl Int. Airport Amsterdam has, for example:
         ('52-18N', '004-46E', '-2M')
         Moenchengladbach (where I live):
         ('51-14N', '063-03E', None)
-        If you need lat and long as float values, look at 
+        If you need lat and long as float values, look at
         getStationPositionFloat() instead
         """
         # convert self.altitude to string for consistency
@@ -633,7 +633,7 @@ class WeatherReport:
 
     def getStationPositionFloat(self):
         """
-        Return latitude and longitude as float values in a 
+        Return latitude and longitude as float values in a
         tuple (lat, long, alt).
         """
         return (self.latf, self.longf, self.altitude)
@@ -684,7 +684,7 @@ class WeatherReport:
 
     def getTime(self):
         """
-        Return the time when the observation was made.  Note that this 
+        Return the time when the observation was made.  Note that this
         is *not* the time when the report was fetched by us
         Format:  YYYY.MM.DD HHMM UTC
         Example: 2002.04.01 1020 UTC
@@ -700,7 +700,7 @@ class WeatherReport:
 
     def getPixmap(self):
         """
-        Return a suggested pixmap name, without extension, depending on 
+        Return a suggested pixmap name, without extension, depending on
         current weather.
         """
         return self.pixmap
@@ -757,7 +757,7 @@ class WeatherReport:
 
 
 class ReportParser:
-    """Parse raw METAR data from a WeatherReport object into actual 
+    """Parse raw METAR data from a WeatherReport object into actual
     values and return the object with the values filled in."""
 
     def __init__(self, MetarReport = None):
@@ -768,7 +768,7 @@ class ReportParser:
         """
         Extract cloud information. Return None or a tuple (sky type as a
         string of text, cloud type (if any)  and suggested pixmap name)
-        """   
+        """
         matches = self.match_WeatherPart(CLOUD_RE_STR)
         skytype = None
         ctype = None
@@ -798,9 +798,9 @@ class ReportParser:
 
     def extractSkyConditions(self) :
         """
-        Extract sky condition information from the encoded report. Return 
-        a tuple containing the description of the sky conditions as a 
-        string and a suggested pixmap name for an icon representing said 
+        Extract sky condition information from the encoded report. Return
+        a tuple containing the description of the sky conditions as a
+        string and a suggested pixmap name for an icon representing said
         sky condition.
         """
         matches = self.match_WeatherPart(CTYPE_RE_STR)
@@ -828,10 +828,10 @@ class ReportParser:
 
     def match_WeatherPart(self, regexp) :
         """
-        Return the matching part of the encoded Metar report.  
-        regexp: the regexp needed to extract this part.  
-        Return the first matching string or None.  
-        WARNING: Some Metar reports may contain several matching 
+        Return the matching part of the encoded Metar report.
+        regexp: the regexp needed to extract this part.
+        Return the first matching string or None.
+        WARNING: Some Metar reports may contain several matching
         strings, only the first one is taken into account!
         """
         matches=[]
@@ -844,7 +844,7 @@ class ReportParser:
         return matches
 
     def ParseReport(self, MetarReport = None):
-        """Take report with raw info only and return it with in 
+        """Take report with raw info only and return it with in
         parsed values filled in. Note: This function edits the
         WeatherReport object you supply!"""
         if self.Report is None and MetarReport is None:
@@ -915,7 +915,7 @@ class ReportParser:
                 self.Report.tempf = float(f)
                 # The string we have split is "(NN C)", hence the slice
                 self.Report.temp = float(c[1:])
-            
+
             # wind chill
 
             elif (header == "Windchill"):
@@ -925,7 +925,7 @@ class ReportParser:
                 self.Report.w_chill = float(c[1:])
 
             # wind dir and speed
-            
+
             elif (header == "Wind"):
                 if (data.find("Calm") != -1):
                     self.Report.windspeed = 0.0
@@ -966,7 +966,7 @@ class ReportParser:
                         break
 
             # dew point
-            
+
             elif (header == "Dew Point"):
                 f, c = data.split(None, 3)[0:3:2]
                 self.Report.dewpf = float(f)
@@ -974,19 +974,19 @@ class ReportParser:
                 self.Report.dewp = float(c[1:])
 
             # humidity
-             
+
             elif (header == "Relative Humidity"):
                 h = data.split("%", 1)[0]
                 self.Report.humid = int(h)
 
             # pressure
-            
+
             elif (header == "Pressure (altimeter)"):
                 p = data.split(" ", 1)[0]
                 self.Report.press = (float(p)*33.863886)
 
             # shot weather desc. ("rain", "mist", ...)
-            
+
             elif (header == "Weather"):
                 self.Report.weather = data
 
@@ -996,14 +996,20 @@ class ReportParser:
                 self.Report.sky = data
 
             # the encoded report itself
-            
+
             elif (header == "ob"):
                 self.Report.code = data.strip()
 
             # the cycle value ("time slot")
 
             elif (header == "cycle"):
-                self.Report.cycle = int(data)
+                try:
+                    self.Report.cycle = int(data)
+                except ValueError:
+                    # cycle value is missing or garbled, assume cycle 0
+                    # TODO: parse the date/time header if it isn't too involved
+                    self.Report.cycle = 0
+
 
         # cloud info
         cloudinfo = self.extractCloudInformation()
@@ -1037,7 +1043,7 @@ class ReportParser:
 
 class ReportFetcher:
     """Fetches a report from a given METAR id, optionally taking into
-       account a different baseurl and using environment var-specified 
+       account a different baseurl and using environment var-specified
        proxies."""
 
     def __init__(self, MetarStationCode = None, baseurl = \
@@ -1068,7 +1074,7 @@ class ReportFetcher:
         protocol://user:password@host.name.tld:port/
         is expected, for example:
         http://squid.somenet.com:3128/
-        If no proxy is specified, the environment variable http_proxy 
+        If no proxy is specified, the environment variable http_proxy
         is inspected. If it isn't set, a direct connection is tried.
         """
         if self.stationid is None and StationCode is None:
@@ -1079,7 +1085,7 @@ class ReportFetcher:
 
         self.stationid = self.stationid.upper()
         self.reporturl = "%s%s.TXT" % (self.baseurl, self.stationid)
-        
+
         if proxy:
             p_dict = {'http': proxy}
             p_handler = urllib2.ProxyHandler(p_dict)
@@ -1099,14 +1105,14 @@ class ReportFetcher:
 
         if fn.info().status:
             raise NetworkException, "Could not fetch METAR report"
-            
+
         report = WeatherReport(self.stationid)
         report.reporturl = self.reporturl
         report.fullreport = self.fullreport
         self.report = report # Caching it for GetReport()
 
         return report
-        
+
     def GetReport(self):
         """Get a previously fetched report again"""
         return self.report
