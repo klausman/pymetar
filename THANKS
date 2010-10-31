@@ -11,7 +11,7 @@ Thanks go to...
 ...Tim Middleton who provided code for getWindchill() and getCustom()
 ...Adrian Holovaty for pointing out trouble with types.TupleType and 
    contributing a solution
-...Stefan Majer for pointing up an exception bug
+...Stefan Majer for pointing out an exception bug
 ...Uli Martens for providing a Debian package and a man page
 ...Laurent Rahuel for catching a bug in getVisibilityKilometers()
 ...Nicolas Évrard for finding a cloud cover bug
@@ -20,3 +20,5 @@ Thanks go to...
    conditions parsing regexen and suggesting a better method for storing and 
    reporting sky conditions and cloud information. He also contributed code
    to calculate wind chill if it's not given in the report.
+...Jeff Miller for finding a bug in CLOUD_RE_STR (sky condition parsing) and
+   submitting the most complete bug report, patch and test case ever
