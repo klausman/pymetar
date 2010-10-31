@@ -1,1 +1,1 @@
-../pymetar.py
+../../pymetar.py
