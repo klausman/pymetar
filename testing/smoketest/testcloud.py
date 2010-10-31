@@ -14,7 +14,7 @@ if __name__ == "__main__":
         reports = sys.argv[2:]
     else:
         reports = os.listdir(repdir)
-
+    reports.sort()
     count=0
     rf=pymetar.ReportFetcher()
     for reportfile in reports:

@@ -15,6 +15,7 @@ if __name__ == "__main__":
     else:
         reports = os.listdir(repdir)
 
+    reports.sort()
     count=0
     rf=pymetar.ReportFetcher()
 
@@ -69,7 +70,11 @@ if __name__ == "__main__":
         a=pr.getWindchill()
         a=pr.getWindchillF()
 
+        pr._ClearAllFields()
+
         count += 1
+    
+        sys.stdout.write("...ok\n")
 
     sys.stderr.write("%s station reports check out ok\n" % (count))
 
