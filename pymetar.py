@@ -376,8 +376,8 @@ def metar_to_iso8601(metardate) :
         (date, hour) = metardate.split()[:2]
         (year, month, day) = date.split('.')
         # assuming tz is always 'UTC', aka 'Z'
-        return "%s-%s-%s %s:%s:00Z" % \
-            (year, month, day, hour[:2], hour[2:4])
+        return ("%s-%s-%s %s:%s:00Z" % 
+                (year, month, day, hour[:2], hour[2:4]))
 
 def parseLatLong(latlong):
     """
@@ -523,7 +523,7 @@ class WeatherReport:
         Return the wind speed in knots
         """
         if self.windspeed is not None:
-            return self.windspeedknots
+            return self.windspeed * 1.94384449 
 
     def getWindDirection(self):
         """
@@ -723,26 +723,28 @@ class WeatherReport:
         """
         Return wind chill in degrees Celsius
         """
-        # I've had two choices here: simply convert the Fahrenheit windchill (see below)
-        # or calculate it seperately if needed. I chose the latter for accuracy reasons
-        if self.w_chill ==  None:
-            if  self.temp and self.temp < 10 and \
-                self.windspeed and (self.windspeed*3.6) > 4.8:
-                self.w_chill = 13.12 + 0.6215*self.temp - 11.37*(self.windspeed*3.6)**0.16\
-                                 + 0.3965*self.temp*(self.windspeed*3.6)**0.16
+        # http://en.wikipedia.org/wiki/Wind_chill - North American wind chill
+        # index
+        if self.w_chill is None:
+            if (self.temp and self.temp <= 10 and 
+                self.windspeed and (self.windspeed*3.6) > 4.8):
+                self.w_chill = (13.12 + 0.6215*self.temp - 
+                                11.37*(self.windspeed*3.6)**0.16 +
+                                0.3965*self.temp*(self.windspeed*3.6)**0.16)
         return self.w_chill
 
     def getWindchillF(self):
         """
         Return wind chill in degrees Fahrenheit
         """
-        # This code is derived from NOAA's test on the topic, put into code (and donated)
-        # by Alexander Voronin
-        if self.w_chillf == None:
-            if  self.tempf and self.tempf <= 50 and \
-                self.windspeedmph and self.windspeedmph >= 3:
-                self.w_chillf = 35.74 + 0.6215*self.tempf - 35.75*self.windspeedmph**0.16 + \
-                                0.4275*self.tempf*self.windspeedmph**0.16
+        # http://en.wikipedia.org/wiki/Wind_chill - North American wind chill
+        # index
+        if self.w_chillf is None:
+            if (self.tempf and self.tempf <= 50 and 
+                self.windspeedmph and self.windspeedmph >= 3):
+                self.w_chillf = (35.74 + 0.6215*self.tempf - 
+                                 35.75*self.windspeedmph**0.16 + 
+                                 0.4275*self.tempf*self.windspeedmph**0.16)
             else:
                 self.w_chillf = self.tempf
 
@@ -777,20 +779,20 @@ class ReportParser:
             if wcloud is not None:
                 stype = wcloud[:3]
                 if stype in ("CLR", "SKC", "CAV", "NSC"):
-                    skytype="Clear sky"
-                    pixmap="sun"
+                    skytype = "Clear sky"
+                    pixmap = "sun"
                 elif stype == "BKN" :
-                    skytype="Broken clouds"
-                    pixmap="suncloud"
+                    skytype = "Broken clouds"
+                    pixmap = "suncloud"
                 elif stype == "SCT" :
-                    skytype="Scattered clouds"
-                    pixmap="suncloud"
+                    skytype = "Scattered clouds"
+                    pixmap = "suncloud"
                 elif stype == "FEW" :
-                    skytype="Few clouds"
-                    pixmap="suncloud"
+                    skytype = "Few clouds"
+                    pixmap = "suncloud"
                 elif stype == "OVC" :
-                    skytype="Overcast"
-                    pixmap="cloud"
+                    skytype = "Overcast"
+                    pixmap = "cloud"
                 if ctype == None:
                     ctype = CLOUDTYPES.get(wcloud[6:], None)
 
@@ -805,12 +807,12 @@ class ReportParser:
         """
         matches = self.match_WeatherPart(CTYPE_RE_STR)
         for wcond in matches:
-            if (len(wcond)>3) and (wcond.startswith('+') \
-                or wcond.startswith('-')) :
+            if ((len(wcond)>3) and 
+                (wcond.startswith('+') or wcond.startswith('-'))):
                 wcond = wcond[1:]
-            if wcond.startswith('+') or wcond.startswith('-') :
+            if wcond.startswith('+') or wcond.startswith('-'):
                 pphen = 1
-            elif len(wcond) < 4 :
+            elif len(wcond) < 4:
                 pphen = 0
             else :
                 pphen = 2
@@ -834,7 +836,7 @@ class ReportParser:
         WARNING: Some Metar reports may contain several matching
         strings, only the first one is taken into account!
         """
-        matches=[]
+        matches = []
         if self.Report.code is not None :
             rg = re.compile(regexp)
             for wpart in self.Report.getRawMetarCode().split() :
@@ -848,8 +850,8 @@ class ReportParser:
         parsed values filled in. Note: This function edits the
         WeatherReport object you supply!"""
         if self.Report is None and MetarReport is None:
-            raise EmptyReportException, \
-                "No report given on init and ParseReport()."
+            raise EmptyReportException(
+                "No report given on init and ParseReport().")
         elif MetarReport is not None:
             self.Report = MetarReport
 
@@ -887,9 +889,9 @@ class ReportParser:
                     ht = None
                 # A few jokers out there think O==0
                 if "O" in lat:
-                    lat=lat.replace("O", "0")
+                    lat = lat.replace("O", "0")
                 if "O" in lng:
-                    lng=lng.replace("O", "0")
+                    lng = lng.replace("O", "0")
 
                 self.Report.stat_city = rcity.strip()[::-1]
                 self.Report.stat_country = rcoun.strip()[::-1]
@@ -903,8 +905,8 @@ class ReportParser:
             # The line containing date and time of the report
             # We have to make sure that the station ID is *not*
             # in this line to avoid trying to parse the ob: line
-            elif ((data.find(" UTC")) != -1 and \
-                    (data.find(self.Report.givenstationid)) == -1):
+            elif ((data.find(" UTC")) != -1 and 
+                  (data.find(self.Report.givenstationid)) == -1):
                 rt = data.split("/")[1]
                 self.Report.rtime = rt.strip()
 
@@ -1046,7 +1048,7 @@ class ReportFetcher:
        account a different baseurl and using environment var-specified
        proxies."""
 
-    def __init__(self, MetarStationCode = None, baseurl = \
+    def __init__(self, MetarStationCode = None, baseurl = 
         "http://weather.noaa.gov/pub/data/observations/metar/decoded/"):
         """Set stationid attribute and base URL to fetch report from"""
         self.stationid = MetarStationCode
@@ -1078,8 +1080,8 @@ class ReportFetcher:
         is inspected. If it isn't set, a direct connection is tried.
         """
         if self.stationid is None and StationCode is None:
-            raise EmptyIDException, \
-                "No ID given on init and FetchReport()."
+            raise EmptyIDException( 
+                "No ID given on init and FetchReport().")
         elif StationCode is not None:
             self.stationid = StationCode
 
