@@ -376,7 +376,7 @@ def metar_to_iso8601(metardate) :
         (date, hour) = metardate.split()[:2]
         (year, month, day) = date.split('.')
         # assuming tz is always 'UTC', aka 'Z'
-        return ("%s-%s-%s %s:%s:00Z" % 
+        return ("%s-%s-%s %s:%s:00Z" %
                 (year, month, day, hour[:2], hour[2:4]))
 
 def parseLatLong(latlong):
@@ -524,7 +524,7 @@ class WeatherReport:
         Return the wind speed in knots
         """
         if self.windspeed is not None:
-            return self.windspeed * 1.94384449 
+            return self.windspeed * 1.94384449
 
     def getWindDirection(self):
         """
@@ -733,9 +733,9 @@ class WeatherReport:
         # http://en.wikipedia.org/wiki/Wind_chill - North American wind chill
         # index
         if self.w_chill is None:
-            if (self.temp and self.temp <= 10 and 
+            if (self.temp and self.temp <= 10 and
                 self.windspeed and (self.windspeed*3.6) > 4.8):
-                self.w_chill = (13.12 + 0.6215*self.temp - 
+                self.w_chill = (13.12 + 0.6215*self.temp -
                                 11.37*(self.windspeed*3.6)**0.16 +
                                 0.3965*self.temp*(self.windspeed*3.6)**0.16)
         return self.w_chill
@@ -747,10 +747,10 @@ class WeatherReport:
         # http://en.wikipedia.org/wiki/Wind_chill - North American wind chill
         # index
         if self.w_chillf is None:
-            if (self.tempf and self.tempf <= 50 and 
+            if (self.tempf and self.tempf <= 50 and
                 self.windspeedmph and self.windspeedmph >= 3):
-                self.w_chillf = (35.74 + 0.6215*self.tempf - 
-                                 35.75*self.windspeedmph**0.16 + 
+                self.w_chillf = (35.74 + 0.6215*self.tempf -
+                                 35.75*self.windspeedmph**0.16 +
                                  0.4275*self.tempf*self.windspeedmph**0.16)
             else:
                 self.w_chillf = self.tempf
@@ -814,7 +814,7 @@ class ReportParser:
         """
         matches = self.match_WeatherPart(CTYPE_RE_STR)
         for wcond in matches:
-            if ((len(wcond)>3) and 
+            if ((len(wcond)>3) and
                 (wcond.startswith('+') or wcond.startswith('-'))):
                 wcond = wcond[1:]
             if wcond.startswith('+') or wcond.startswith('-'):
@@ -912,7 +912,7 @@ class ReportParser:
             # The line containing date and time of the report
             # We have to make sure that the station ID is *not*
             # in this line to avoid trying to parse the ob: line
-            elif ((data.find(" UTC")) != -1 and 
+            elif ((data.find(" UTC")) != -1 and
                   (data.find(self.Report.givenstationid)) == -1):
                 rt = data.split("/")[1]
                 self.Report.rtime = rt.strip()
@@ -1057,7 +1057,7 @@ class ReportFetcher:
        account a different baseurl and using environment var-specified
        proxies."""
 
-    def __init__(self, MetarStationCode = None, baseurl = 
+    def __init__(self, MetarStationCode = None, baseurl =
         "http://weather.noaa.gov/pub/data/observations/metar/decoded/"):
         """Set stationid attribute and base URL to fetch report from"""
         self.stationid = MetarStationCode
@@ -1089,7 +1089,7 @@ class ReportFetcher:
         is inspected. If it isn't set, a direct connection is tried.
         """
         if self.stationid is None and StationCode is None:
-            raise EmptyIDException( 
+            raise EmptyIDException(
                 "No ID given on init and FetchReport().")
         elif StationCode is not None:
             self.stationid = StationCode
