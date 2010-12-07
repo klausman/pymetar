@@ -47,6 +47,7 @@ if __name__ == "__main__":
         a=pr.getVisibilityMiles()
         a=pr.getHumidity()
         a=pr.getPressure()
+        a=pr.getPressuremmHg()
         a=pr.getRawMetarCode()
         a=pr.getWeather()
         a=pr.getSkyConditions()

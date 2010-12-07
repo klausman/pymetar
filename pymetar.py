@@ -442,6 +442,7 @@ class WeatherReport:
         self.dewpf = None
         self.humid = None
         self.press = None
+        self.pressmmHg = None
         self.code = None
         self.weather = None
         self.sky = None
@@ -563,6 +564,12 @@ class WeatherReport:
         Return pressure in hPa.
         """
         return self.press
+
+    def getPressuremmHg(self):
+        """
+        Return pressure in mmHg.
+        """
+        return self.pressmmHg
 
     def getRawMetarCode(self):
         """
@@ -986,6 +993,8 @@ class ReportParser:
             elif (header == "Pressure (altimeter)"):
                 p = data.split(" ", 1)[0]
                 self.Report.press = (float(p)*33.863886)
+                # 1 in = 25.4 mm => 1 inHg = 25.4 mmHg
+                self.Report.pressmmHg = (float(p)*25.4000)
 
             # shot weather desc. ("rain", "mist", ...)
 
