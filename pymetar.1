@@ -1,53 +1,48 @@
-.TH pymetar 1 "August 1st, 2004" "pymetar"
-
-.SH NAME
-pymetar \- query METAR information and display it in a user-friendly way
-
-.SH SYNOPSIS
-.B pymetar
-.RI [ station ]
-.br
-.B pymetar
-.RI --help
-.br
-.B pymetar
-.RI --version
-.br
-
-.SH DESCRIPTION
-Use pymetar to retrieve METAR (METeorological Aviation Report) information from
-the internet provided by the NOAA (National Oceanic and Atmospheric
-Administration) and display it in an plain text format.
-.PP
-Call pymetar with the name of the METAR station you want to query. You can
-get the four-letter specifier of a station near you from
-http://www.nws.noaa.gov/tg/siteloc.shtml
-
-.SH OPTIONS
-.B
-.IP --help
-Display the usage screen and quit.
-.B
-.IP --version
-Display the version number of pymetar and the pymetar library and quit.
-
-.SH AUTHOR
-
-pymetar was written by Tobias Klausmann
-<klausman-pymetar@schwarzvogel.de>
-.br
-This manual page was written by Uli Martens <uli@youam.net> for the Debian
-GNU/Linux system (but may be used by others)\&. Permission is granted to
-copy, distribute and/or modify this document under the same terms as
-pymetar itself (the GNU General Public License, Version 2 or later)\&.
-
-.SH ENVIRONMENT
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "PYEMTAR" "1" "February 2011" "" ""
+.
+.SH "NAME"
+\fBpyemtar\fR \- query METAR information and display it in a user\-friendly way
+.
+.SH "SYNOPSIS"
+\fBpymetar\fR [station]
+.
+.P
+\fBpymetar\fR \-\-help
+.
+.P
+\fBpymetar\fR \-\-version
+.
+.SH "DESCRIPTION"
+Use pymetar to retrieve METAR (METeorological Aviation Report) information from the internet provided by the NOAA (National Oceanic and Atmospheric Administration) and display it in an plain text format\.
+.
+.P
+Call pymetar with the name of the METAR station you want to query\. You can get the four\-letter specifier of a station near you from http://www\.nws\.noaa\.gov/tg/siteloc\.shtml
+.
+.SH "OPTIONS"
+.
 .TP
-.B HTTP_PROXY
-Set this variable to your HTTP proxy daemon to accelerate consecutive runs
-of pymetar.
-The name of the variable is case insensitive, you can also use
-http_proxy or HTTP_Proxy if you like.
-The syntax for this variable is
-.br
-http://username:password@proxy.yourdomain.com:port
+\fB\-\-help\fR, \fB\-h\fR
+Display the usage screen and quit\.
+.
+.TP
+\fB\-\-version\fR, \fB\-v\fR
+Display the version number of pymetar and the pymetar library and quit\.
+.
+.SH "AUTHOR"
+pymetar was written by Tobias Klausmann \fIklausman\-pymetar@schwarzvogel\.de\fR
+.
+.P
+This manual page was written by Tobias Klausmann using ronn, a Markdown to roff converter\.
+.
+.P
+Permission is granted to copy, distribute and/or modify this document under the same terms as pymetar itself (the GNU General Public License, Version 2 or later)&\.
+.
+.SH "ENVIRONMENT"
+.
+.TP
+\fBHTTP_PROXY\fR
+Set this variable to your HTTP proxy daemon to accelerate consecutive runs of pymetar\. The name of the variable is case insensitive, you can also use http_proxy or HTTP_Proxy if you like\. The syntax for this variable is http://username:password@proxy\.yourdomain\.com:port
+

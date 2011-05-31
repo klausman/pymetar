@@ -1,0 +1,47 @@
+pymetar(1) -- query METAR information and display it in a user-friendly way
+===========================================================================
+
+## SYNOPSIS
+
+`pymetar` [station]
+
+`pymetar` --help
+
+`pymetar` --version
+
+## DESCRIPTION
+
+Use pymetar to retrieve METAR (METeorological Aviation Report) information from
+the internet provided by the NOAA (National Oceanic and Atmospheric
+Administration) and display it in an plain text format.
+
+Call pymetar with the name of the METAR station you want to query. You can get
+the four-letter specifier of a station near you from
+http://www.nws.noaa.gov/tg/siteloc.shtml
+
+## OPTIONS
+
+* `--help`, `-h`:
+  Display the usage screen and quit.
+
+* `--version`, `-v`:
+  Display the version number of pymetar and the pymetar library and quit.
+
+## AUTHOR
+
+pymetar was written by Tobias Klausmann <klausman-pymetar@schwarzvogel.de>
+
+This manual page was written by Tobias Klausmann using ronn, a Markdown to roff
+converter.
+
+Permission is granted to copy, distribute and/or modify this document under the
+same terms as pymetar itself (the GNU General Public License, Version 2 or
+later)\&.
+
+## ENVIRONMENT
+
+* `HTTP_PROXY`:
+  Set this variable to your HTTP proxy daemon to accelerate consecutive runs of
+  pymetar. The name of the variable is case insensitive, you can also use
+  http_proxy or HTTP_Proxy if you like. The syntax for this variable is
+  http://username:password@proxy.yourdomain.com:port
