@@ -70,9 +70,9 @@ merging the patch a lot easier.
 Python 3
 --------
 
-Pymetar does currently not support Python 3 (Python 2.4 and 2.6
-should be fine. Versions <2.4 are not officially supported but may
-work by chance).
+Pymetar does currently not support Python 3 (Python 2.4-2.7 should
+be fine. Versions <2.4 are not officially supported but may work
+by chance).
 
 I'm currently in the process of plotting out the future of
 Pymetar, which naturally includes thinking about Py3. The design

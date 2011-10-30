@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 """This is just here to make pylint happy """
-# Copyright (C) 2002-2010  Tobias Klausmann
+# Copyright (C) 2002-2011  Tobias Klausmann
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.17"
+__version__ = "0.18"
 __revision__ = "$Rev$"[6:-2]
 
-__doc__ = """Pymetar v%s (c) 2002-2010 Tobias Klausmann
+__doc__ = """Pymetar v%s (c) 2002-2011 Tobias Klausmann
 
 Pymetar is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
