@@ -1,7 +1,7 @@
 Help on module pymetar:
 
 NAME
-    pymetar - Pymetar v0.18 (c) 2002-2011 Tobias Klausmann
+    pymetar - Pymetar v0.19 (c) 2002-2011 Tobias Klausmann
 
 FILE
     pymetar.py
@@ -276,10 +276,10 @@ DATA
     CLOUD_RE_STR = '^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})(CB)?$'
     COND_RE_STR = r'^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|...S|U...
     __author__ = 'klausman-pymetar@schwarzvogel.de'
-    __version__ = '0.18'
+    __version__ = '0.19'
 
 VERSION
-    0.18
+    0.19
 
 AUTHOR
     klausman-pymetar@schwarzvogel.de

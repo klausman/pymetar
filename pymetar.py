@@ -23,7 +23,7 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.18"
+__version__ = "0.19"
 __revision__ = "$Rev$"[6:-2]
 
 __doc__ = """Pymetar v%s (c) 2002-2011 Tobias Klausmann
