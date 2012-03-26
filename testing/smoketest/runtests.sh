@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TESTS="testall.py testpixmap.py testcloud.py"
+TESTS="testall.py testpixmap.py testcloud.py testskycond.py"
 SETDIR="reports/"
 SETS="set-2007-10-14  set-2010-01-17 set-2010-10-31"
 
