@@ -33,7 +33,6 @@ __revision__ = "$Rev$"[6:-2]
 
 CLOUD_RE_STR = (r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?"
                 r"(TCU|CU|CB|SC|CBMAM|ACC|SCSL|CCSL|ACSL)?$")
-CTYPE_RE_STR = r"^(TCU|CU|CB|SC|CBMAM|ACC|SCSL|CCSL|ACSL)?$"
 COND_RE_STR  = (r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|"
                 r"GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\\+?FC)$")
 
@@ -789,7 +788,7 @@ class ReportParser:
         string and a suggested pixmap name for an icon representing said
         sky condition.
         """
-        matches = self.match_WeatherPart(CTYPE_RE_STR)
+        matches = self.match_WeatherPart(COND_RE_STR)
         for wcond in matches:
             if ((len(wcond)>3) and
                 (wcond.startswith('+') or wcond.startswith('-'))):
