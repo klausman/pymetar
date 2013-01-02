@@ -71,7 +71,7 @@ if __name__ == "__main__":
         a=pr.getWindchill()
         a=pr.getWindchillF()
 
-        pr._ClearAllFields()
+        pr._clearallfields()
 
         count += 1
     

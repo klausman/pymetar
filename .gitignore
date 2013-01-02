@@ -1,4 +1,7 @@
 *.pyc
+**/*.pyc
+*.swp
+**/*.swp
 build/**
 dist/**
 testing/smoketest/logs/**
