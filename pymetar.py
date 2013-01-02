@@ -717,6 +717,7 @@ class WeatherReport:
         if self.w_chill is None:
             if (self.temp and self.temp <= 10 and
                 self.windspeed and (self.windspeed*3.6) > 4.8):
+
                 self.w_chill = (13.12 + 0.6215*self.temp -
                                 11.37*(self.windspeed*3.6)**0.16 +
                                 0.3965*self.temp*(self.windspeed*3.6)**0.16)
@@ -731,6 +732,7 @@ class WeatherReport:
         if self.w_chillf is None:
             if (self.tempf and self.tempf <= 50 and
                 self.windspeedmph and self.windspeedmph >= 3):
+
                 self.w_chillf = (35.74 + 0.6215*self.tempf -
                                  35.75*self.windspeedmph**0.16 +
                                  0.4275*self.tempf*self.windspeedmph**0.16)
@@ -797,7 +799,9 @@ class ReportParser:
         for wcond in matches:
             if ((len(wcond) > 3) and
                 (wcond.startswith('+') or wcond.startswith('-'))):
+
                 wcond = wcond[1:]
+
             if wcond.startswith('+') or wcond.startswith('-'):
                 pphen = 1
             elif len(wcond) < 4:
