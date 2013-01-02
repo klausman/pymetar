@@ -781,7 +781,7 @@ class ReportParser:
                 elif stype == "OVC":
                     skytype = "Overcast"
                     pixmap = "cloud"
-                if ctype == None:
+                if ctype is None:
                     ctype = CLOUDTYPES.get(wcloud[6:], None)
 
         return (skytype, ctype, pixmap)
@@ -1022,7 +1022,7 @@ class ReportParser:
         self.Report.pixmap = condpixmap or cloudpixmap
 
         # Cloud type (Cumulonimbus etc.)
-        if self.Report.cloudtype == None:
+        if self.Report.cloudtype is None:
             self.Report.cloudtype = cloudtype
 
         # report is complete
