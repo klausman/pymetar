@@ -1,3 +1,5 @@
 *.pyc
-testing/smoketest/reports/**
+build/**
+dist/**
 testing/smoketest/logs/**
+testing/smoketest/reports/**
