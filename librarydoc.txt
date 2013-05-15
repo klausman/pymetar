@@ -1,31 +1,15 @@
 Help on module pymetar:
 
 NAME
-    pymetar - Pymetar v0.19 (c) 2002-2011 Tobias Klausmann
+    pymetar
 
 FILE
-    pymetar.py
+    /home/klausman/src/pymetar-old/pymetar.py
 
 DESCRIPTION
-    Pymetar is a python module and command line tool designed to fetch Metar
+    PyMETAR is a python module and command line tool designed to fetch Metar
     reports from the NOAA (http://www.noaa.gov) and allow access to the
     included weather information.
-    
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-    
-    This program is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    General Public License for more details.
-    
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-    
-    Please e-mail bugs to: klausman-pymetar@schwarzvogel.de
 
 CLASSES
     exceptions.Exception(exceptions.BaseException)
@@ -38,16 +22,208 @@ CLASSES
     
     class EmptyIDException(exceptions.Exception)
      |  This gets thrown when the ReportFetcher is called with an empty ID
+     |  
+     |  Method resolution order:
+     |      EmptyIDException
+     |      exceptions.Exception
+     |      exceptions.BaseException
+     |      __builtin__.object
+     |  
+     |  Data descriptors defined here:
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from exceptions.Exception:
+     |  
+     |  __init__(...)
+     |      x.__init__(...) initializes x; see help(type(x)) for signature
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from exceptions.Exception:
+     |  
+     |  __new__ = <built-in method __new__ of type object>
+     |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from exceptions.BaseException:
+     |  
+     |  __delattr__(...)
+     |      x.__delattr__('name') <==> del x.name
+     |  
+     |  __getattribute__(...)
+     |      x.__getattribute__('name') <==> x.name
+     |  
+     |  __getitem__(...)
+     |      x.__getitem__(y) <==> x[y]
+     |  
+     |  __getslice__(...)
+     |      x.__getslice__(i, j) <==> x[i:j]
+     |      
+     |      Use of negative indices is not supported.
+     |  
+     |  __reduce__(...)
+     |  
+     |  __repr__(...)
+     |      x.__repr__() <==> repr(x)
+     |  
+     |  __setattr__(...)
+     |      x.__setattr__('name', value) <==> x.name = value
+     |  
+     |  __setstate__(...)
+     |  
+     |  __str__(...)
+     |      x.__str__() <==> str(x)
+     |  
+     |  __unicode__(...)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from exceptions.BaseException:
+     |  
+     |  __dict__
+     |  
+     |  args
+     |  
+     |  message
     
     class EmptyReportException(exceptions.Exception)
      |  This gets thrown when the ReportParser gets fed an empty report
+     |  
+     |  Method resolution order:
+     |      EmptyReportException
+     |      exceptions.Exception
+     |      exceptions.BaseException
+     |      __builtin__.object
+     |  
+     |  Data descriptors defined here:
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from exceptions.Exception:
+     |  
+     |  __init__(...)
+     |      x.__init__(...) initializes x; see help(type(x)) for signature
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from exceptions.Exception:
+     |  
+     |  __new__ = <built-in method __new__ of type object>
+     |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from exceptions.BaseException:
+     |  
+     |  __delattr__(...)
+     |      x.__delattr__('name') <==> del x.name
+     |  
+     |  __getattribute__(...)
+     |      x.__getattribute__('name') <==> x.name
+     |  
+     |  __getitem__(...)
+     |      x.__getitem__(y) <==> x[y]
+     |  
+     |  __getslice__(...)
+     |      x.__getslice__(i, j) <==> x[i:j]
+     |      
+     |      Use of negative indices is not supported.
+     |  
+     |  __reduce__(...)
+     |  
+     |  __repr__(...)
+     |      x.__repr__() <==> repr(x)
+     |  
+     |  __setattr__(...)
+     |      x.__setattr__('name', value) <==> x.name = value
+     |  
+     |  __setstate__(...)
+     |  
+     |  __str__(...)
+     |      x.__str__() <==> str(x)
+     |  
+     |  __unicode__(...)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from exceptions.BaseException:
+     |  
+     |  __dict__
+     |  
+     |  args
+     |  
+     |  message
     
     class NetworkException(exceptions.Exception)
      |  This gets thrown when a network error occurs
+     |  
+     |  Method resolution order:
+     |      NetworkException
+     |      exceptions.Exception
+     |      exceptions.BaseException
+     |      __builtin__.object
+     |  
+     |  Data descriptors defined here:
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from exceptions.Exception:
+     |  
+     |  __init__(...)
+     |      x.__init__(...) initializes x; see help(type(x)) for signature
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data and other attributes inherited from exceptions.Exception:
+     |  
+     |  __new__ = <built-in method __new__ of type object>
+     |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from exceptions.BaseException:
+     |  
+     |  __delattr__(...)
+     |      x.__delattr__('name') <==> del x.name
+     |  
+     |  __getattribute__(...)
+     |      x.__getattribute__('name') <==> x.name
+     |  
+     |  __getitem__(...)
+     |      x.__getitem__(y) <==> x[y]
+     |  
+     |  __getslice__(...)
+     |      x.__getslice__(i, j) <==> x[i:j]
+     |      
+     |      Use of negative indices is not supported.
+     |  
+     |  __reduce__(...)
+     |  
+     |  __repr__(...)
+     |      x.__repr__() <==> repr(x)
+     |  
+     |  __setattr__(...)
+     |      x.__setattr__('name', value) <==> x.name = value
+     |  
+     |  __setstate__(...)
+     |  
+     |  __str__(...)
+     |      x.__str__() <==> str(x)
+     |  
+     |  __unicode__(...)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from exceptions.BaseException:
+     |  
+     |  __dict__
+     |  
+     |  args
+     |  
+     |  message
     
     class ReportFetcher
      |  Fetches a report from a given METAR id, optionally taking into
-     |  account a different baseurl and using environment var-specified 
+     |  account a different baseurl and using environment var-specified
      |  proxies.
      |  
      |  Methods defined here:
@@ -59,7 +235,7 @@ CLASSES
      |      protocol://user:password@host.name.tld:port/
      |      is expected, for example:
      |      http://squid.somenet.com:3128/
-     |      If no proxy is specified, the environment variable http_proxy 
+     |      If no proxy is specified, the environment variable http_proxy
      |      is inspected. If it isn't set, a direct connection is tried.
      |  
      |  GetReport(self)
@@ -73,13 +249,13 @@ CLASSES
      |      Set stationid attribute and base URL to fetch report from
     
     class ReportParser
-     |  Parse raw METAR data from a WeatherReport object into actual 
+     |  Parse raw METAR data from a WeatherReport object into actual
      |  values and return the object with the values filled in.
      |  
      |  Methods defined here:
      |  
      |  ParseReport(self, MetarReport=None)
-     |      Take report with raw info only and return it with in 
+     |      Take report with raw info only and return it with in
      |      parsed values filled in. Note: This function edits the
      |      WeatherReport object you supply!
      |  
@@ -91,21 +267,21 @@ CLASSES
      |      string of text, cloud type (if any)  and suggested pixmap name)
      |  
      |  extractSkyConditions(self)
-     |      Extract sky condition information from the encoded report. Return 
-     |      a tuple containing the description of the sky conditions as a 
-     |      string and a suggested pixmap name for an icon representing said 
+     |      Extract sky condition information from the encoded report. Return
+     |      a tuple containing the description of the sky conditions as a
+     |      string and a suggested pixmap name for an icon representing said
      |      sky condition.
      |  
      |  match_WeatherPart(self, regexp)
-     |      Return the matching part of the encoded Metar report.  
-     |      regexp: the regexp needed to extract this part.  
-     |      Return the first matching string or None.  
-     |      WARNING: Some Metar reports may contain several matching 
+     |      Return the matching part of the encoded Metar report.
+     |      regexp: the regexp needed to extract this part.
+     |      Return the first matching string or None.
+     |      WARNING: Some Metar reports may contain several matching
      |      strings, only the first one is taken into account!
     
     class WeatherReport
      |  Incorporates both the unparsed textual representation of the
-     |  weather report and the parsed values as soon as they are filled 
+     |  weather report and the parsed values as soon as they are filled
      |  in by ReportParser.
      |  
      |  Methods defined here:
@@ -126,9 +302,9 @@ CLASSES
      |  
      |  getCycle(self)
      |      Return cycle value.
-     |      The cycle value is not the frequency or delay between 
-     |      observations but the "time slot" in which the observation was made. 
-     |      There are 24 cycle slots every day which usually last from N:45 to 
+     |      The cycle value is not the frequency or delay between
+     |      observations but the "time slot" in which the observation was made.
+     |      There are 24 cycle slots every day which usually last from N:45 to
      |      N+1:45. The cycle from 23:45 to 0:45 is cycle 0.
      |  
      |  getDewPointCelsius(self)
@@ -148,11 +324,14 @@ CLASSES
      |      (e.g. 2002-07-25 15:12:00Z)
      |  
      |  getPixmap(self)
-     |      Return a suggested pixmap name, without extension, depending on 
+     |      Return a suggested pixmap name, without extension, depending on
      |      current weather.
      |  
      |  getPressure(self)
      |      Return pressure in hPa.
+     |  
+     |  getPressuremmHg(self)
+     |      Return pressure in mmHg.
      |  
      |  getRawMetarCode(self)
      |      Return the encoded weather report.
@@ -197,23 +376,23 @@ CLASSES
      |  
      |  getStationPosition(self)
      |      Return latitude, longitude and altitude above sea level of station
-     |      as a tuple. Some stations don't deliver altitude, for those, None 
+     |      as a tuple. Some stations don't deliver altitude, for those, None
      |      is returned as altitude.  The lat/longs are expressed as follows:
      |      xx-yyd
      |      where xx is degrees, yy minutes and d the direction.
-     |      Thus 51-14N means 51 degrees, 14 minutes north.  d may take the 
-     |      values N, S for latitues and W, E for longitudes. Latitude and 
-     |      Longitude may include seconds.  Altitude is always given as meters 
+     |      Thus 51-14N means 51 degrees, 14 minutes north.  d may take the
+     |      values N, S for latitues and W, E for longitudes. Latitude and
+     |      Longitude may include seconds.  Altitude is always given as meters
      |      above sea level, including a trailing M.
      |      Schipohl Int. Airport Amsterdam has, for example:
      |      ('52-18N', '004-46E', '-2M')
      |      Moenchengladbach (where I live):
      |      ('51-14N', '063-03E', None)
-     |      If you need lat and long as float values, look at 
+     |      If you need lat and long as float values, look at
      |      getStationPositionFloat() instead
      |  
      |  getStationPositionFloat(self)
-     |      Return latitude and longitude as float values in a 
+     |      Return latitude and longitude as float values in a
      |      tuple (lat, long, alt).
      |  
      |  getTemperatureCelsius(self)
@@ -223,7 +402,7 @@ CLASSES
      |      Return the temperature in degrees Fahrenheit.
      |  
      |  getTime(self)
-     |      Return the time when the observation was made.  Note that this 
+     |      Return the time when the observation was made.  Note that this
      |      is *not* the time when the report was fetched by us
      |      Format:  YYYY.MM.DD HHMM UTC
      |      Example: 2002.04.01 1020 UTC
@@ -266,16 +445,13 @@ CLASSES
 FUNCTIONS
     metar_to_iso8601(metardate)
         Convert a metar date to an ISO8601 date.
-    
-    parseLatLong(latlong)
-        Parse Lat or Long in METAR notation into float values. N and E 
-        are +, S and W are -. Expects one positional string and returns 
-        one float value.
 
 DATA
-    CLOUD_RE_STR = '^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})(CB)?$'
+    CLOUDTYPES = {'ACC': 'altocumulus castellanus', 'ACSL': 'standing lent...
+    CLOUD_RE_STR = '^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?(TCU|CU...
     COND_RE_STR = r'^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|...S|U...
     __author__ = 'klausman-pymetar@schwarzvogel.de'
+    __revision__ = ''
     __version__ = '0.19'
 
 VERSION
