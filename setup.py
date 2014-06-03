@@ -17,16 +17,16 @@ from distutils.core import setup
 
 import pymetar
 
-setup(name = "pymetar", version = pymetar.__version__,
-      license = "GNU GPL",
-      description = pymetar.__doc__,
-      author = "Tobias Klausmann",
-      author_email = "klausman-pymetar@schwarzvogel.de",
-      url = "http://www.schwarzvogel.de/software-pymetar.shtml",
-      packages= [ "" ],
+setup(name="pymetar", version=pymetar.__version__,
+      license="GNU GPL",
+      description=pymetar.__doc__,
+      author="Tobias Klausmann",
+      author_email="klausman-pymetar@schwarzvogel.de",
+      url="http://www.schwarzvogel.de/software-pymetar.shtml",
+      packages=[""],
       py_modules=["pymetar"],
-      scripts = [ "bin/pymetar" ], 
-      data_files = [("share/doc/pymetar-%s"%pymetar.__version__,
-       ['README', 'COPYING', 'THANKS', 'librarydoc.txt']),
-       ("share/man/man1", ['pymetar.1'])]
+      scripts=["bin/pymetar"],
+      data_files=[("share/doc/pymetar-%s" % pymetar.__version__,
+                   ['README', 'COPYING', 'THANKS', 'librarydoc.txt']),
+                  ("share/man/man1", ['pymetar.1'])]
       )

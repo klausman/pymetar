@@ -7,18 +7,18 @@ reports from the NOAA (http://www.noaa.gov) and allow access to the
 included weather information.
 """
 # This program is free software; you can redistribute it and/or modify it
-#under the terms of the GNU General Public License as published by the
-#Free Software Foundation; either version 2 of the License, or (at your
-#option) any later version.
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation; either version 2 of the License, or (at your
+# option) any later version.
 #
-#This program is distributed in the hope that it will be useful, but
-#WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#General Public License for more details.
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
 #
-#You should have received a copy of the GNU General Public License along
-#with this program; if not, write to the Free Software Foundation, Inc.,
-#51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA."""
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA."""
 #
 import fpformat
 import math
@@ -38,16 +38,19 @@ COND_RE_STR = (r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|"
 
 
 class EmptyReportException(Exception):
+
     """This gets thrown when the ReportParser gets fed an empty report"""
     pass
 
 
 class EmptyIDException(Exception):
+
     """This gets thrown when the ReportFetcher is called with an empty ID"""
     pass
 
 
 class NetworkException(Exception):
+
     """This gets thrown when a network error occurs"""
     pass
 
@@ -389,20 +392,21 @@ def _parse_lat_long(latlong):
     coords = 0.0
     elen = len(elements)
     if elen > 2:
-        coords = coords + float(elements[2])/3600.0
+        coords = coords + float(elements[2]) / 3600.0
 
     if elen > 1:
-        coords = coords + float(elements[1])/60.0
+        coords = coords + float(elements[1]) / 60.0
 
     coords = coords + float(elements[0])
 
     if compass_dir in ('W', 'S'):
-        coords = -1.0*coords
+        coords = -1.0 * coords
 
     return coords
 
 
 class WeatherReport:
+
     """Incorporates both the unparsed textual representation of the
     weather report and the parsed values as soon as they are filled
     in by ReportParser."""
@@ -499,7 +503,7 @@ class WeatherReport:
         cf. http://en.wikipedia.org/wiki/Beaufort_scale
         """
         if self.windspeed is not None:
-            return round(math.pow(self.windspeed/0.8359648, 2/3.0))
+            return round(math.pow(self.windspeed / 0.8359648, 2 / 3.0))
 
     def getWindSpeedKnots(self):
         """
@@ -716,11 +720,11 @@ class WeatherReport:
         # index
         if self.w_chill is None:
             if (self.temp and self.temp <= 10 and
-                self.windspeed and (self.windspeed*3.6) > 4.8):
+                    self.windspeed and (self.windspeed * 3.6) > 4.8):
 
-                self.w_chill = (13.12 + 0.6215*self.temp -
-                                11.37*(self.windspeed*3.6)**0.16 +
-                                0.3965*self.temp*(self.windspeed*3.6)**0.16)
+                self.w_chill = (13.12 + 0.6215 * self.temp -
+                                11.37 * (self.windspeed * 3.6) ** 0.16 +
+                                0.3965 * self.temp * (self.windspeed * 3.6) ** 0.16)
         return self.w_chill
 
     def getWindchillF(self):
@@ -731,11 +735,11 @@ class WeatherReport:
         # index
         if self.w_chillf is None:
             if (self.tempf and self.tempf <= 50 and
-                self.windspeedmph and self.windspeedmph >= 3):
+                    self.windspeedmph and self.windspeedmph >= 3):
 
-                self.w_chillf = (35.74 + 0.6215*self.tempf -
-                                 35.75*self.windspeedmph**0.16 +
-                                 0.4275*self.tempf*self.windspeedmph**0.16)
+                self.w_chillf = (35.74 + 0.6215 * self.tempf -
+                                 35.75 * self.windspeedmph ** 0.16 +
+                                 0.4275 * self.tempf * self.windspeedmph ** 0.16)
             else:
                 self.w_chillf = self.tempf
 
@@ -749,6 +753,7 @@ class WeatherReport:
 
 
 class ReportParser:
+
     """Parse raw METAR data from a WeatherReport object into actual
     values and return the object with the values filled in."""
 
@@ -798,7 +803,7 @@ class ReportParser:
         matches = self.match_WeatherPart(COND_RE_STR)
         for wcond in matches:
             if ((len(wcond) > 3) and
-                (wcond.startswith('+') or wcond.startswith('-'))):
+                    (wcond.startswith('+') or wcond.startswith('-'))):
 
                 wcond = wcond[1:]
 
@@ -861,8 +866,8 @@ class ReportParser:
             # The station id inside the report
             # As the station line may contain additional sets of (),
             # we have to search from the rear end and flip things around
-            if header.find("("+self.Report.givenstationid+")") != -1:
-                id_offset = header.find("("+self.Report.givenstationid+")")
+            if header.find("(" + self.Report.givenstationid + ")") != -1:
+                id_offset = header.find("(" + self.Report.givenstationid + ")")
                 loc = data[:id_offset]
                 coords = data[id_offset:]
                 try:
@@ -929,7 +934,7 @@ class ReportParser:
                     self.Report.windcomp = None
                 elif (data.find("Variable") != -1):
                     speed = data.split(" ", 3)[2]
-                    self.Report.windspeed = (float(speed)*0.44704)
+                    self.Report.windspeed = (float(speed) * 0.44704)
                     self.Report.windspeedkt = int(data.split(" ", 5)[4][1:])
                     self.Report.windspeedmph = int(speed)
                     self.Report.winddir = None
@@ -942,7 +947,7 @@ class ReportParser:
                     speedkt = fields[8][1:]
                     self.Report.winddir = int(deg[1:])
                     self.Report.windcomp = comp.strip()
-                    self.Report.windspeed = (float(speed)*0.44704)
+                    self.Report.windspeed = (float(speed) * 0.44704)
                     self.Report.windspeedkt = (int(speedkt))
                     self.Report.windspeedmph = int(speed)
 
@@ -951,7 +956,7 @@ class ReportParser:
             elif (header == "Visibility"):
                 for visgroup in data.split():
                     try:
-                        self.Report.vis = float(visgroup)*1.609344
+                        self.Report.vis = float(visgroup) * 1.609344
                         break
                     except ValueError:
                         self.Report.vis = None
@@ -975,9 +980,9 @@ class ReportParser:
 
             elif (header == "Pressure (altimeter)"):
                 press = data.split(" ", 1)[0]
-                self.Report.press = (float(press)*33.863886)
+                self.Report.press = (float(press) * 33.863886)
                 # 1 in = 25.4 mm => 1 inHg = 25.4 mmHg
-                self.Report.pressmmHg = (float(press)*25.4000)
+                self.Report.pressmmHg = (float(press) * 25.4000)
 
             # shot weather desc. ("rain", "mist", ...)
 
@@ -1036,12 +1041,12 @@ class ReportParser:
 
 
 class ReportFetcher:
+
     """Fetches a report from a given METAR id, optionally taking into
        account a different baseurl and using environment var-specified
        proxies."""
 
-    def __init__(self, MetarStationCode=None, baseurl=
-        "http://weather.noaa.gov/pub/data/observations/metar/decoded/"):
+    def __init__(self, MetarStationCode=None, baseurl="http://weather.noaa.gov/pub/data/observations/metar/decoded/"):
         """Set stationid attribute and base URL to fetch report from"""
         self.stationid = MetarStationCode
         self.baseurl = baseurl
