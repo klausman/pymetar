@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 # pylint: disable-msg=C0103 # Disable naming style messages
-# Pymetar (c) 2002-2012 Tobias Klausmann
+# Pymetar (c) 2002-2015 Tobias Klausmann
 """
 PyMETAR is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
@@ -27,9 +27,7 @@ import urllib2
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.19"
-__revision__ = "$Rev$"[6:-2]
-
+__version__ = "0.20"
 
 CLOUD_RE_STR = (r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?"
                 r"(TCU|CU|CB|SC|CBMAM|ACC|SCSL|CCSL|ACSL)?$")
