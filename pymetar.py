@@ -1044,7 +1044,7 @@ class ReportFetcher:
        account a different baseurl and using environment var-specified
        proxies."""
 
-    def __init__(self, MetarStationCode=None, baseurl="http://weather.noaa.gov/pub/data/observations/metar/decoded/"):
+    def __init__(self, MetarStationCode=None, baseurl="http://tgftp.nws.noaa.gov/data/observations/metar/decoded/"):
         """Set stationid attribute and base URL to fetch report from"""
         self.stationid = MetarStationCode
         self.baseurl = baseurl

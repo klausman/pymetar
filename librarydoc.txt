@@ -245,7 +245,7 @@ CLASSES
      |      Take a string (RawReport) and a station code and turn it
      |      into an object suitable for ReportParser
      |  
-     |  __init__(self, MetarStationCode=None, baseurl='http://weather.noaa.gov/pub/data/observations/metar/decoded/')
+     |  __init__(self, MetarStationCode=None, baseurl='http://tgftp.nws.noaa.gov/data/observations/metar/decoded/')
      |      Set stationid attribute and base URL to fetch report from
     
     class ReportParser
