@@ -60,7 +60,7 @@ Due to some peculiarities in the METAR format, I can not rule out the
 possibility that the library barfs on some less common types of reports. If you
 encounter such a report, please save it and the error messages you get as
 completely as possible and send them to me at `klausman-pymetar@schwarzvogel.de`
-- Thanks a lot!
+--- Thanks a lot!
 
 Of course you may send all the other bugs you encounter to me, too. As this is a
 Python library, chances are that you are Python programmer and can provide a
