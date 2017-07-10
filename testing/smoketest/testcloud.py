@@ -1,4 +1,4 @@
-#!/usr/bin/python2 -tt
+#!/usr/bin/python3 -tt
 
 import pymetar
 import sys
@@ -21,7 +21,10 @@ if __name__ == "__main__":
         station = reportfile[:-4]
 
         fd = open("%s/%s" % (repdir, reportfile))
-        report = fd.read()
+        try:
+            report = fd.read()
+        except UnicodeDecodeError:
+            continue
         fd.close()
 
         repo = rf.MakeReport(station, report)
@@ -30,7 +33,7 @@ if __name__ == "__main__":
         
         a=pr.getCloudtype()
         if a != None:
-            print "%s: %s"% (station, a)
+            print("%s: %s"% (station, a))
 
         count += 1
 

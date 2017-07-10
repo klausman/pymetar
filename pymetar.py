@@ -20,10 +20,9 @@ included weather information.
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA."""
 #
-import fpformat
 import math
 import re
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
@@ -1085,16 +1084,16 @@ class ReportFetcher:
 
         if proxy:
             p_dict = {'http': proxy}
-            p_handler = urllib2.ProxyHandler(p_dict)
-            opener = urllib2.build_opener(p_handler, urllib2.HTTPHandler)
-            urllib2.install_opener(opener)
+            p_handler = urllib.request.ProxyHandler(p_dict)
+            opener = urllib.request.build_opener(p_handler, urllib.request.HTTPHandler)
+            urllib.request.install_opener(opener)
         else:
-            urllib2.install_opener(
-                urllib2.build_opener(urllib2.ProxyHandler, urllib2.HTTPHandler))
+            urllib.request.install_opener(
+                urllib.request.build_opener(urllib.request.ProxyHandler, urllib.request.HTTPHandler))
 
         try:
-            fn = urllib2.urlopen(self.reporturl)
-        except urllib2.HTTPError, why:
+            fn = urllib.request.urlopen(self.reporturl)
+        except urllib.error.HTTPError as why:
             raise NetworkException(why)
 
         # Dump entire report in a variable

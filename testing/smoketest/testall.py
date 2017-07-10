@@ -1,4 +1,4 @@
-#!/usr/bin/python2 -tt
+#!/usr/bin/python3 -tt
 
 import pymetar
 import sys
@@ -25,7 +25,10 @@ if __name__ == "__main__":
         sys.stdout.flush()
 
         fd = open("%s/%s" % (repdir, reportfile))
-        report = fd.read()
+        try:
+            report = fd.read()
+        except UnicodeDecodeError:
+            continue
         fd.close()
 
         repo = rf.MakeReport(station, report)
