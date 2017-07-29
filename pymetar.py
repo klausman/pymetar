@@ -22,7 +22,15 @@ included weather information.
 #
 import math
 import re
-import urllib.request, urllib.error, urllib.parse
+import sys
+
+from future.standard_library import install_aliases
+install_aliases()
+
+
+import urllib.request  # noqa: E402
+import urllib.error    # noqa: E402
+import urllib.parse    # noqa: E402
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
@@ -33,28 +41,33 @@ CLOUD_RE_STR = (r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?"
 COND_RE_STR = (r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|"
                r"GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\\+?FC)$")
 
+# Some things we have to do differently between Py2 and Py3
+if sys.version_info.major == 3:
+    _py3 = True
+else:
+    _py3 = False
+
 
 class EmptyReportException(Exception):
-
     """This gets thrown when the ReportParser gets fed an empty report"""
-    pass
 
 
 class EmptyIDException(Exception):
-
     """This gets thrown when the ReportFetcher is called with an empty ID"""
-    pass
 
 
 class NetworkException(Exception):
-
     """This gets thrown when a network error occurs"""
-    pass
+
+
+class GarbledReportException(Exception):
+    """This gets thrown when the report is not valid ASCII or Unicode"""
 
 # What a boring list to type !
 #
 # It seems the NOAA doesn't want to return plain text, but considering the
 # format of their response, this is not to save bandwidth :-)
+
 
 _WEATHER_CONDITIONS = {
     "DZ": ("Drizzle", "rain", {
@@ -721,7 +734,8 @@ class WeatherReport:
 
                 self.w_chill = (13.12 + 0.6215 * self.temp -
                                 11.37 * (self.windspeed * 3.6) ** 0.16 +
-                                0.3965 * self.temp * (self.windspeed * 3.6) ** 0.16)
+                                0.3965 * self.temp *
+                                (self.windspeed * 3.6) ** 0.16)
         return self.w_chill
 
     def getWindchillF(self):
@@ -736,7 +750,8 @@ class WeatherReport:
 
                 self.w_chillf = (35.74 + 0.6215 * self.tempf -
                                  35.75 * self.windspeedmph ** 0.16 +
-                                 0.4275 * self.tempf * self.windspeedmph ** 0.16)
+                                 0.4275 * self.tempf *
+                                 self.windspeedmph ** 0.16)
             else:
                 self.w_chillf = self.tempf
 
@@ -849,7 +864,14 @@ class ReportParser:
         elif MetarReport is not None:
             self.Report = MetarReport
 
-        lines = self.Report.fullreport.split("\n")
+        try:
+            if _py3:
+                lines = self.Report.fullreport.split("\n")
+            else:
+                lines = self.Report.fullreport.decode().split("\n")
+        except UnicodeDecodeError:
+            raise GarbledReportException(
+                "Report is not valid ASCII or Unicode.")
 
         for line in lines:
             try:
@@ -879,12 +901,16 @@ class ReportParser:
                     lat, lng, alt = coords.split()[1:4]
                     alt = int(alt[:-1])  # cut off 'M' for meters
                 except ValueError:
-                    (lat, lng) = coords.split()[1:3]
+                    try:
+                        (lat, lng) = coords.split()[1:3]
+                    except ValueError:
+                        # The lat/long is completely hooped, nothing we can do.
+                        (lat, lng) = (None, None)
                     alt = None
                 # A few jokers out there think O==0
-                if "O" in lat:
+                if lat and "O" in lat:
                     lat = lat.replace("O", "0")
-                if "O" in lng:
+                if lng and "O" in lng:
                     lng = lng.replace("O", "0")
 
                 self.Report.stat_city = rcity.strip()[::-1]
@@ -1043,7 +1069,9 @@ class ReportFetcher:
        account a different baseurl and using environment var-specified
        proxies."""
 
-    def __init__(self, MetarStationCode=None, baseurl="http://tgftp.nws.noaa.gov/data/observations/metar/decoded/"):
+    def __init__(self, MetarStationCode=None,
+                 baseurl="http://tgftp.nws.noaa.gov/data/observations/"
+                         "metar/decoded/"):
         """Set stationid attribute and base URL to fetch report from"""
         self.stationid = MetarStationCode
         self.baseurl = baseurl
@@ -1085,11 +1113,13 @@ class ReportFetcher:
         if proxy:
             p_dict = {'http': proxy}
             p_handler = urllib.request.ProxyHandler(p_dict)
-            opener = urllib.request.build_opener(p_handler, urllib.request.HTTPHandler)
+            opener = urllib.request.build_opener(
+                p_handler, urllib.request.HTTPHandler)
             urllib.request.install_opener(opener)
         else:
             urllib.request.install_opener(
-                urllib.request.build_opener(urllib.request.ProxyHandler, urllib.request.HTTPHandler))
+                urllib.request.build_opener(urllib.request.ProxyHandler,
+                                            urllib.request.HTTPHandler))
 
         try:
             fn = urllib.request.urlopen(self.reporturl)
@@ -1099,8 +1129,9 @@ class ReportFetcher:
         # Dump entire report in a variable
         self.fullreport = fn.read()
 
-        if fn.info().status:
-            raise NetworkException("Could not fetch METAR report")
+        if fn.status != 200:
+            raise NetworkException(
+                "Could not fetch METAR report: %s" % (fn.status))
 
         report = WeatherReport(self.stationid)
         report.reporturl = self.reporturl

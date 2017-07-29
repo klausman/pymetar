@@ -1,59 +1,62 @@
 #!/usr/bin/python -tt
 # -*- coding: iso-8859-15 -*-
 
-__version__="1.1"
+__version__ = "1.1"
 
 import pymetar
 import sys
 
-if len(sys.argv)<2 or sys.argv[1]=="--help":
-    sys.stderr.write("Usage: %s <station id>\n"% sys.argv[0])
-    sys.stderr.write("Station IDs can be found at: http://www.aviationweather.gov/metar\n")
+if len(sys.argv) < 2 or sys.argv[1] == "--help":
+    sys.stderr.write("Usage: %s <station id>\n" % sys.argv[0])
+    sys.stderr.write(
+        "Station IDs can be found at: http://www.aviationweather.gov/metar\n")
     sys.exit(1)
 elif (sys.argv[1] == "--version"):
-    print "%s v%s using pymetar lib v%s"%(sys.argv[0], __version__,pymetar.__version__)
+    print("%s v%s using pymetar lib v%s" %
+          (sys.argv[0], __version__, pymetar.__version__))
     sys.exit(0)
 else:
-    station=sys.argv[1]
+    station = sys.argv[1]
 
 try:
-    rf=pymetar.ReportFetcher(station)
-    rep=rf.FetchReport()
-except Exception, e:
+    rf = pymetar.ReportFetcher(station)
+    rep = rf.FetchReport()
+except Exception as e:
     sys.stderr.write("Something went wrong when fetching the report.\n")
     sys.stderr.write("These usually are transient problems if the station ")
     sys.stderr.write("ID is valid. \nThe error encountered was:\n")
-    sys.stderr.write(str(e)+"\n")
+    sys.stderr.write(str(e) + "\n")
     sys.exit(1)
 
-rp=pymetar.ReportParser()
-pr=rp.ParseReport(rep)
+rp = pymetar.ReportParser()
+pr = rp.ParseReport(rep)
 
-print "Weather report for %s (%s) as of %s" %\
-    (pr.getStationName(), station, pr.getISOTime())
-print "Values of \"None\" indicate that the value is missing from the report."
-print "Temperature: %s C / %s F" %\
-    (pr.getTemperatureCelsius(), pr.getTemperatureFahrenheit())
+print("Weather report for %s (%s) as of %s" %
+      (pr.getStationName(), station, pr.getISOTime()))
+print("Values of \"None\" indicate that the value is missing from the report.")
+print("Temperature: %s C / %s F" %
+      (pr.getTemperatureCelsius(), pr.getTemperatureFahrenheit()))
 if pr.getWindchill() and pr.getWindchillF():
-	print "Wind chill: %.2f C / %.2f F" % (pr.getWindchill(), pr.getWindchillF())
+    print("Wind chill: %.2f C / %.2f F" %
+          (pr.getWindchill(), pr.getWindchillF()))
 
-print "Rel. Humidity: %s%%" % (pr.getHumidity())
+print("Rel. Humidity: %s%%" % (pr.getHumidity()))
 if pr.getWindSpeed() is not None:
-    print "Wind speed: %0.2f m/s (%i Bft, %0.2f knots)" % \
-        (pr.getWindSpeed(), pr.getWindSpeedBeaufort(), pr.getWindSpeedKnots())
+    print("Wind speed: %0.2f m/s (%i Bft, %0.2f knots)" %
+          (pr.getWindSpeed(), pr.getWindSpeedBeaufort(),
+           pr.getWindSpeedKnots()))
 else:
-    print "Wind speed: None"
-    
-print "Wind direction: %s deg (%s)" %\
-    (pr.getWindDirection(), pr.getWindCompass())
-if pr.getPressure() is not None:
-    print "Pressure: %s hPa" % (int(pr.getPressure()))
-else:
-    print "Pressure: None"
+    print("Wind speed: None")
 
-print "Dew Point: %s C / %s F" %\
-    (pr.getDewPointCelsius(), pr.getDewPointFahrenheit())
-print "Weather:",pr.getWeather()
-print "Cloudtype:",pr.getCloudtype()
-print "Sky Conditions:",pr.getSkyConditions()
-    
+print("Wind direction: %s deg (%s)" %
+      (pr.getWindDirection(), pr.getWindCompass()))
+if pr.getPressure() is not None:
+    print("Pressure: %s hPa" % (int(pr.getPressure())))
+else:
+    print("Pressure: None")
+
+print("Dew Point: %s C / %s F" %
+      (pr.getDewPointCelsius(), pr.getDewPointFahrenheit()))
+print("Weather: %s" % (pr.getWeather()))
+print("Cloudtype: %s" % (pr.getCloudtype()))
+print("Sky Conditions: %s" % (pr.getSkyConditions()))
