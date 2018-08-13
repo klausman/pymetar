@@ -1,6 +1,6 @@
 # PyMETAR - a module to fetch and parse METAR reports
 
-**NOTE:** If you're looking for information regarding Python 3 and PyMETAR, see
+**NOTE:** If you're looking for information regarding Python 2 and PyMETAR, see
 the end of this document.
 
 The National Oceanic and Atmospheric Administration (NOAA, http://www.noaa.gov/)
@@ -36,7 +36,7 @@ On the user end, the library provides a large number of methods to fetch the
 parsed information in a plethora of formats. Those functions are described in
 the file `librarydoc.txt` which was in turn generated using PyDoc.
 
-As of version 0.5, PyMETAR uses `urllib2` which in turn makes it easy to honor
+PyMETAR uses `urllib2` (and its successors), which in turn makes it easy to honor
 the environment variable `http_proxy`. This simplifies use of a proxy
 tremendously. Thanks go to Davide Di Blasi for both suggesting and implementing
 this. The environment variable is easy to use: just set it to:
@@ -45,9 +45,9 @@ this. The environment variable is easy to use: just set it to:
 http://username:password@proxy.yourdomain.com:port 
 ```
 
-As of version 0.11, you can also specify a proxy (with the same syntax) as an
-argument to the fetching function. This is sometimes easier when using PyMETAR
-in a web application environment (such as ZopeWeatherApplet by Jerome Alet). See
+You can also specify a proxy (with the same syntax) as an argument to the
+fetching function. This is sometimes easier when using PyMETAR in a web
+application environment (such as ZopeWeatherApplet by Jerome Alet). See
 `librarydoc.txt` for details on how to accomplish that. 
 
 You can also use IPs instead of hostnames, of course. When in doubt, ask your
@@ -66,14 +66,15 @@ level, that makes merging the patch a lot easier.
 
 ## Python 2, 3, PyPy, PyPy3 and so on
 
-This version of PyMETAR supports Python 2.7 and Python 3.x without editing. It
-does require the `future` module[0] to achieve this.
+This version of PyMETAR supports Python 3.x and PyPy3 only. The last version to
+have Python2 as its main target was v0.21.
 
-PyMETAR is currently *not* compatible with PyPy or PyPy3. This can probably be
-fixed with a few small edits (which then break the Py2/Py3 compatibility
-mentioned above). Patches which support all three mentioned interpreters
-without too much hackery are welcome.
+Compatibility with PyPy (2.x), Jython and other interpreters not mentioned
+above is unknown.
 
-Compatibility with Jython and other interpreters not mentioned above is unknown.
+I maintain a branch (called Python2) on git which is the state of Pymetar as it
+was for the last version supporting Python 2. That branch is in maintenance
+mode, i.e. it will only receive fixes for security issues or bugs that can be
+fixed without too much fuss. That branch will go away in 2020.
 
 [0] http://python-future.org/

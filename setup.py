@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#! /usr/bin/env python3
 #
 # pymetar
 # (c) 2002 Tobias Klausmann

@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 # pylint: disable-msg=C0103 # Disable naming style messages
-# Pymetar (c) 2002-2015 Tobias Klausmann
+# Pymetar (c) 2002-2018 Tobias Klausmann
 """
 PyMETAR is a python module and command line tool designed to fetch Metar
 reports from the NOAA (http://www.noaa.gov) and allow access to the
@@ -22,11 +22,6 @@ included weather information.
 #
 import math
 import re
-import sys
-
-from future.standard_library import install_aliases
-install_aliases()
-
 
 import urllib.request  # noqa: E402
 import urllib.error    # noqa: E402
@@ -34,18 +29,12 @@ import urllib.parse    # noqa: E402
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "0.21"
+__version__ = "1.0"
 
 CLOUD_RE_STR = (r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?"
                 r"(TCU|CU|CB|SC|CBMAM|ACC|SCSL|CCSL|ACSL)?$")
 COND_RE_STR = (r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|"
                r"GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\\+?FC)$")
-
-# Some things we have to do differently between Py2 and Py3
-if sys.version_info.major == 3:
-    _py3 = True
-else:
-    _py3 = False
 
 
 class EmptyReportException(Exception):
@@ -865,10 +854,7 @@ class ReportParser:
             self.Report = MetarReport
 
         try:
-            if _py3:
-                lines = self.Report.fullreport.split("\n")
-            else:
-                lines = self.Report.fullreport.decode().split("\n")
+            lines = self.Report.fullreport.decode().split("\n")
         except UnicodeDecodeError:
             raise GarbledReportException(
                 "Report is not valid ASCII or Unicode.")

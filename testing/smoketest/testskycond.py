@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
         fd = open("%s/%s" % (repdir, reportfile))
         try:
-            report = fd.read()
+            report = fd.read().encode()
         except UnicodeDecodeError:
             continue
         fd.close()
