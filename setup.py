@@ -16,18 +16,26 @@
 import pymetar
 import setuptools
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setuptools.setup(
     name="pymetar",
     version=pymetar.__version__,
     author="Tobias Klausmann",
     author_email="klausman-pymetar@schwarzvogel.de",
     description=pymetar.__doc__,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="http://www.schwarzvogel.de/software-pymetar.shtml",
-    license="GNU GPL",
     packages=setuptools.find_packages(),
     py_modules=["pymetar"],
     scripts=["bin/pymetar"],
     data_files=[("share/doc/pymetar-%s" % pymetar.__version__,
-                 ['README.md', 'COPYING', 'THANKS', 'librarydoc.txt']),
+                 ['README.md', 'COPYING', 'THANKS']),
                 ("share/man/man1", ['pymetar.1'])]
-)
+    classifiers=(
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)", 
+    "Operating System :: OS Independent",
+e)
