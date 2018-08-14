@@ -1,8 +1,7 @@
+build/
+dist/
 *.pyc
-**/*.pyc
+pymetar.egg-info/
 *.swp
-**/*.swp
-build/**
-dist/**
-testing/smoketest/logs/**
-testing/smoketest/reports/**
+testing/smoketest/logs/
+testing/smoketest/reports/

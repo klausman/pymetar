@@ -13,20 +13,21 @@
 #
 # $Id: $
 
-from distutils.core import setup
-
 import pymetar
+import setuptools
 
-setup(name="pymetar", version=pymetar.__version__,
-      license="GNU GPL",
-      description=pymetar.__doc__,
-      author="Tobias Klausmann",
-      author_email="klausman-pymetar@schwarzvogel.de",
-      url="http://www.schwarzvogel.de/software-pymetar.shtml",
-      packages=[""],
-      py_modules=["pymetar"],
-      scripts=["bin/pymetar"],
-      data_files=[("share/doc/pymetar-%s" % pymetar.__version__,
-                   ['README', 'COPYING', 'THANKS', 'librarydoc.txt']),
-                  ("share/man/man1", ['pymetar.1'])]
-      )
+setuptools.setup(
+    name="pymetar",
+    version=pymetar.__version__,
+    author="Tobias Klausmann",
+    author_email="klausman-pymetar@schwarzvogel.de",
+    description=pymetar.__doc__,
+    url="http://www.schwarzvogel.de/software-pymetar.shtml",
+    license="GNU GPL",
+    packages=setuptools.find_packages(),
+    py_modules=["pymetar"],
+    scripts=["bin/pymetar"],
+    data_files=[("share/doc/pymetar-%s" % pymetar.__version__,
+                 ['README.md', 'COPYING', 'THANKS', 'librarydoc.txt']),
+                ("share/man/man1", ['pymetar.1'])]
+)
