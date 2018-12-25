@@ -9,7 +9,7 @@ import sys
 if len(sys.argv) < 2 or sys.argv[1] == "--help":
     sys.stderr.write("Usage: %s <station id>\n" % sys.argv[0])
     sys.stderr.write(
-        "Station IDs can be found at: http://www.aviationweather.gov/metar\n")
+        "Station IDs can be found at: https://www.aviationweather.gov/metar\n")
     sys.exit(1)
 elif (sys.argv[1] == "--version"):
     print("%s v%s using pymetar lib v%s" %
