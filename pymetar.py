@@ -3,7 +3,7 @@
 # Pymetar (c) 2002-2018 Tobias Klausmann
 """
 PyMETAR is a python module and command line tool designed to fetch Metar
-reports from the NOAA (http://www.noaa.gov) and allow access to the
+reports from the NOAA (https://www.noaa.gov) and allow access to the
 included weather information.
 """
 # This program is free software; you can redistribute it and/or modify it
@@ -499,7 +499,7 @@ class WeatherReport:
     def getWindSpeedBeaufort(self):
         """
         Return the wind speed in the Beaufort scale
-        cf. http://en.wikipedia.org/wiki/Beaufort_scale
+        cf. https://en.wikipedia.org/wiki/Beaufort_scale
         """
         if self.windspeed is not None:
             return round(math.pow(self.windspeed / 0.8359648, 2 / 3.0))
@@ -715,7 +715,7 @@ class WeatherReport:
         """
         Return wind chill in degrees Celsius
         """
-        # http://en.wikipedia.org/wiki/Wind_chill - North American wind chill
+        # https://en.wikipedia.org/wiki/Wind_chill - North American wind chill
         # index
         if self.w_chill is None:
             if (self.temp and self.temp <= 10 and
@@ -731,7 +731,7 @@ class WeatherReport:
         """
         Return wind chill in degrees Fahrenheit
         """
-        # http://en.wikipedia.org/wiki/Wind_chill - North American wind chill
+        # https://en.wikipedia.org/wiki/Wind_chill - North American wind chill
         # index
         if self.w_chillf is None:
             if (self.tempf and self.tempf <= 50 and
@@ -1056,7 +1056,7 @@ class ReportFetcher:
        proxies."""
 
     def __init__(self, MetarStationCode=None,
-                 baseurl="http://tgftp.nws.noaa.gov/data/observations/"
+                 baseurl="https://tgftp.nws.noaa.gov/data/observations/"
                          "metar/decoded/"):
         """Set stationid attribute and base URL to fetch report from"""
         self.stationid = MetarStationCode
