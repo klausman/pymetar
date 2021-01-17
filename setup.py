@@ -24,7 +24,7 @@ setuptools.setup(
     version=pymetar.__version__,
     author="Tobias Klausmann",
     author_email="klausman-pymetar@schwarzvogel.de",
-    description=pymetar.__doc__,
+    description="Pymetar is a python module and command line tool that fetches and parses METAR reports"
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="http://www.schwarzvogel.de/software-pymetar.shtml",
