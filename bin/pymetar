@@ -1,7 +1,7 @@
 #!/usr/bin/python -tt
 # -*- coding: iso-8859-15 -*-
 
-__version__ = "1.1"
+__version__ = "1.2"
 
 import pymetar
 import sys
