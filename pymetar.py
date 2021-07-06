@@ -29,7 +29,7 @@ import urllib.parse    # noqa: E402
 
 __author__ = "klausman-pymetar@schwarzvogel.de"
 
-__version__ = "1.2"
+__version__ = "1.3"
 
 CLOUD_RE_STR = (r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?"
                 r"(TCU|CU|CB|SC|CBMAM|ACC|SCSL|CCSL|ACSL)?$")
