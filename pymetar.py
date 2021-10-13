@@ -829,12 +829,13 @@ class ReportParser:
         strings, only the first one is taken into account!
         """
         matches = []
+        # FIXME This mixes direct access to the "code" attribute and the accessor function "getRawMetarCode" which just returns "code".
         if self.Report.code is not None:
             myre = re.compile(regexp)
             for wpart in self.Report.getRawMetarCode().split():
                 match = myre.match(wpart)
                 if match:
-                    matches.append(match.string[match.start(0): match.end(0)])
+                    matches.append(match.group())
         return matches
 
     def ParseReport(self, MetarReport=None):
