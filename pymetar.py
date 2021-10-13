@@ -20,7 +20,6 @@ included weather information.
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA."""
 #
-import math
 import re
 
 import urllib.request  # noqa: E402
@@ -502,7 +501,7 @@ class WeatherReport:
         cf. https://en.wikipedia.org/wiki/Beaufort_scale
         """
         if self.windspeed is not None:
-            return round(math.pow(self.windspeed / 0.8359648, 2 / 3.0))
+            return round((self.windspeed / 0.8359648) ** (2 / 3.0))
 
     def getWindSpeedKnots(self):
         """
