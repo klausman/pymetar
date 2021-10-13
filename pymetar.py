@@ -491,8 +491,7 @@ class WeatherReport:
         """
         Return the wind speed in miles per hour.
         """
-        if self.windspeed is not None:
-            return self.windspeedmph
+        return self.windspeedmph
 
     def getWindSpeedBeaufort(self):
         """
@@ -526,8 +525,7 @@ class WeatherReport:
         """
         Return visibility in km.
         """
-        if self.vis is not None:
-            return self.vis
+        return self.vis
 
     def getVisibilityMiles(self):
         """
