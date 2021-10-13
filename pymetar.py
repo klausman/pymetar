@@ -32,8 +32,8 @@ __version__ = "1.3"
 
 CLOUD_RE_STR = (r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?"
                 r"(TCU|CU|CB|SC|CBMAM|ACC|SCSL|CCSL|ACSL)?$")
-COND_RE_STR = (r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|"
-               r"GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\\+?FC)$")
+COND_RE_STR = (r"^[-+]?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|"
+               r"GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\+?FC)$")
 
 
 class EmptyReportException(Exception):
