@@ -20,7 +20,6 @@ included weather information.
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA."""
 #
-import math
 import re
 
 import urllib.request  # noqa: E402
@@ -33,8 +32,8 @@ __version__ = "1.3"
 
 CLOUD_RE_STR = (r"^(CAVOK|CLR|SKC|BKN|SCT|FEW|OVC|NSC)([0-9]{3})?"
                 r"(TCU|CU|CB|SC|CBMAM|ACC|SCSL|CCSL|ACSL)?$")
-COND_RE_STR = (r"^(-|\\+)?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|"
-               r"GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\\+?FC)$")
+COND_RE_STR = (r"^[-+]?(VC|MI|BC|PR|TS|BL|SH|DR|FZ)?(DZ|RA|SN|SG|IC|PE|"
+               r"GR|GS|UP|BR|FG|FU|VA|SA|HZ|PY|DU|SQ|SS|DS|PO|\+?FC)$")
 
 
 class EmptyReportException(Exception):
@@ -398,14 +397,13 @@ def _parse_lat_long(latlong):
 
     coords = coords + float(elements[0])
 
-    if compass_dir in ('W', 'S'):
+    if compass_dir in 'WS':
         coords = -1.0 * coords
 
     return coords
 
 
 class WeatherReport:
-
     """Incorporates both the unparsed textual representation of the
     weather report and the parsed values as soon as they are filled
     in by ReportParser."""
@@ -493,8 +491,7 @@ class WeatherReport:
         """
         Return the wind speed in miles per hour.
         """
-        if self.windspeed is not None:
-            return self.windspeedmph
+        return self.windspeedmph
 
     def getWindSpeedBeaufort(self):
         """
@@ -502,7 +499,7 @@ class WeatherReport:
         cf. https://en.wikipedia.org/wiki/Beaufort_scale
         """
         if self.windspeed is not None:
-            return round(math.pow(self.windspeed / 0.8359648, 2 / 3.0))
+            return round((self.windspeed / 0.8359648) ** (2 / 3.0))
 
     def getWindSpeedKnots(self):
         """
@@ -528,8 +525,7 @@ class WeatherReport:
         """
         Return visibility in km.
         """
-        if self.vis is not None:
-            return self.vis
+        return self.vis
 
     def getVisibilityMiles(self):
         """
@@ -688,7 +684,7 @@ class WeatherReport:
         Return the time when the observation was made in ISO 8601 format
         (e.g. 2002-07-25 15:12:00Z)
         """
-        return(metar_to_iso8601(self.rtime))
+        return metar_to_iso8601(self.rtime)
 
     def getPixmap(self):
         """
@@ -803,12 +799,10 @@ class ReportParser:
         """
         matches = self.match_WeatherPart(COND_RE_STR)
         for wcond in matches:
-            if ((len(wcond) > 3) and
-                    (wcond.startswith('+') or wcond.startswith('-'))):
-
+            if len(wcond) > 3 and wcond.startswith(('+', '-')):
                 wcond = wcond[1:]
 
-            if wcond.startswith('+') or wcond.startswith('-'):
+            if wcond.startswith(('+', '-')):
                 pphen = 1
             elif len(wcond) < 4:
                 pphen = 0
@@ -835,12 +829,13 @@ class ReportParser:
         strings, only the first one is taken into account!
         """
         matches = []
+        # FIXME This mixes direct access to the "code" attribute and the accessor function "getRawMetarCode" which just returns "code".
         if self.Report.code is not None:
             myre = re.compile(regexp)
             for wpart in self.Report.getRawMetarCode().split():
                 match = myre.match(wpart)
                 if match:
-                    matches.append(match.string[match.start(0): match.end(0)])
+                    matches.append(match.group())
         return matches
 
     def ParseReport(self, MetarReport=None):
@@ -911,14 +906,13 @@ class ReportParser:
             # The line containing date and time of the report
             # We have to make sure that the station ID is *not*
             # in this line to avoid trying to parse the ob: line
-            elif ((data.find(" UTC")) != -1 and
-                  (data.find(self.Report.givenstationid)) == -1):
+            elif " UTC" in data and self.Report.givenstationid not in data:
                 rtime = data.split("/")[1]
                 self.Report.rtime = rtime.strip()
 
             # temperature
 
-            elif (header == "Temperature"):
+            elif header == "Temperature":
                 fnht, cels = data.split(None, 3)[0:3:2]
                 self.Report.tempf = float(fnht)
                 # The string we have split is "(NN C)", hence the slice
@@ -926,7 +920,7 @@ class ReportParser:
 
             # wind chill
 
-            elif (header == "Windchill"):
+            elif header == "Windchill":
                 fnht, cels = data.split(None, 3)[0:3:2]
                 self.Report.w_chillf = float(fnht)
                 # The string we have split is "(NN C)", hence the slice
@@ -934,14 +928,14 @@ class ReportParser:
 
             # wind dir and speed
 
-            elif (header == "Wind"):
-                if (data.find("Calm") != -1):
+            elif header == "Wind":
+                if "Calm" in data:
                     self.Report.windspeed = 0.0
                     self.Report.windspeedkt = 0.0
                     self.Report.windspeedmph = 0.0
                     self.Report.winddir = None
                     self.Report.windcomp = None
-                elif (data.find("Variable") != -1):
+                elif "Variable" in data:
                     speed = data.split(" ", 3)[2]
                     self.Report.windspeed = (float(speed) * 0.44704)
                     self.Report.windspeedkt = int(data.split(" ", 5)[4][1:])
@@ -962,7 +956,7 @@ class ReportParser:
 
             # visibility
 
-            elif (header == "Visibility"):
+            elif header == "Visibility":
                 for visgroup in data.split():
                     try:
                         self.Report.vis = float(visgroup) * 1.609344
@@ -973,7 +967,7 @@ class ReportParser:
 
             # dew point
 
-            elif (header == "Dew Point"):
+            elif header == "Dew Point":
                 fnht, cels = data.split(None, 3)[0:3:2]
                 self.Report.dewpf = float(fnht)
                 # The string we have split is "(NN C)", hence the slice
@@ -981,36 +975,36 @@ class ReportParser:
 
             # humidity
 
-            elif (header == "Relative Humidity"):
+            elif header == "Relative Humidity":
                 h = data.split("%", 1)[0]
                 self.Report.humid = int(h)
 
             # pressure
 
-            elif (header == "Pressure (altimeter)"):
+            elif header == "Pressure (altimeter)":
                 press = data.split(" ", 1)[0]
-                self.Report.press = (float(press) * 33.863886)
+                self.Report.press = float(press) * 33.863886
                 # 1 in = 25.4 mm => 1 inHg = 25.4 mmHg
-                self.Report.pressmmHg = (float(press) * 25.4000)
+                self.Report.pressmmHg = float(press) * 25.4000
 
             # shot weather desc. ("rain", "mist", ...)
 
-            elif (header == "Weather"):
+            elif header == "Weather":
                 self.Report.weather = data
 
             # short desc. of sky conditions
 
-            elif (header == "Sky conditions"):
+            elif header == "Sky conditions":
                 self.Report.sky = data
 
             # the encoded report itself
 
-            elif (header == "ob"):
+            elif header == "ob":
                 self.Report.code = data.strip()
 
             # the cycle value ("time slot")
 
-            elif (header == "cycle"):
+            elif header == "cycle":
                 try:
                     self.Report.cycle = int(data)
                 except ValueError:
